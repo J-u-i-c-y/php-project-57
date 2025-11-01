@@ -1,17 +1,29 @@
-FROM php:8.4-cli
+FROM php:8.2-cli
 
-
-RUN apt-get update && apt-get install -y libzip-dev libpq-dev
-RUN docker-php-ext-install zip pdo pdo_pgsql
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libzip-dev \
+    unzip \
+    curl \
+    git \
+    && docker-php-ext-install pdo pdo_pgsql zip
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && php -r "unlink('composer-setup.php');"
 
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y nodejs
+
 WORKDIR /app
 
 COPY . .
 
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader
 
-CMD ["bash", "-c", "make start"]
+RUN npm ci
+RUN npm run build
+
+EXPOSE 8000
+
+CMD ["bash", "-c", "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
