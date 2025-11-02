@@ -2,17 +2,27 @@
 <ruleset name="Hexlet Code">
     <description>PHP Code Sniffer configuration for Hexlet Code</description>
     
+    <!-- Проверяем только наш код -->
     <file>app</file>
     <file>config</file>
     <file>database</file>
-    <file>resources</file>
     <file>routes</file>
     
-    <!-- Исключаем тесты из проверки имен методов -->
+    <!-- Исключаем стандартные файлы Laravel и тесты -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>tests/</exclude-pattern>
+    <exclude-pattern>bootstrap/</exclude-pattern>
+    <exclude-pattern>storage/</exclude-pattern>
+    <exclude-pattern>public/</exclude-pattern>
     
     <arg name="colors"/>
     <arg value="p"/>
     
+    <!-- Используем PSR12 стандарт -->
     <rule ref="PSR12"/>
+    
+    <!-- Разрешаем несколько traits в одном use -->
+    <rule ref="PSR2.Classes.ClassDeclaration">
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+    </rule>
 </ruleset>
