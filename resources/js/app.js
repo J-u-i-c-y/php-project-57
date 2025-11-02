@@ -1,9 +1,8 @@
-import './bootstrap';
-import ujs from '@rails/ujs';
-import Alpine from 'alpinejs';
+// resources/js/app.js
+import axios from 'axios';
+window.axios = axios;
 
-window.Alpine = Alpine;
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-Alpine.start();
-
-ujs.start();
+// Базовый JavaScript
+console.log('Laravel app loaded');
