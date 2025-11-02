@@ -11,6 +11,7 @@
     <!-- Исключаем стандартные файлы Laravel и тесты -->
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>tests/</exclude-pattern>
+    <exclude-pattern>app/Models/User.php</exclude-pattern>
     <exclude-pattern>bootstrap/</exclude-pattern>
     <exclude-pattern>storage/</exclude-pattern>
     <exclude-pattern>public/</exclude-pattern>
