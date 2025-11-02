@@ -10,7 +10,8 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-     base: process.env.NODE_ENV === 'production' 
+    // Явно указываем базовый URL
+    base: process.env.NODE_ENV === 'production' 
         ? '/build/' 
         : '/',
 });
