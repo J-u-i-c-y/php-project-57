@@ -16,6 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        flash('Запись успешно создана!')->success();
         return view('auth.login');
     }
 
@@ -44,4 +45,6 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+
 }
