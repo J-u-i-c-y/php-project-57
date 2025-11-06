@@ -69,7 +69,7 @@ class TaskStatusController extends Controller
         }
 
         if ($taskStatus->tasks()->exists()) {
-            flash(__('task_statuses.delete_error'))->error();
+            flash(__('layout.delete_error'))->error();
             return redirect()->route('task_statuses.index');
         }
 
