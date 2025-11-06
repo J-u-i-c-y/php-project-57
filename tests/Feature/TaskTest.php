@@ -56,10 +56,14 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
+            'creator_by_id' => 1,
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
-        $response->assertStatus(403); // Должен быть 403, а не redirect
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
+
         $this->assertDatabaseMissing('tasks', [
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -154,7 +158,9 @@ class TaskTest extends TestCase
         ];
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
-        $response->assertStatus(403); // Должен быть 403, а не redirect
+        $response->assertStatus(302);
+        $response->assertRedirect(route('login'));
+        
         $this->assertDatabaseMissing('tasks', $updatedData);
     }
 

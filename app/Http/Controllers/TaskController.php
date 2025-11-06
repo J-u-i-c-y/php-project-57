@@ -59,6 +59,9 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::guest()) {
+            abort(403);
+        }
 
         Log::info('Store method called', [
             'authenticated' => Auth::check(),
@@ -114,6 +117,7 @@ class TaskController extends Controller
         if (Auth::guest()) {
             return abort(403);
         }
+
         $taskStatuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
