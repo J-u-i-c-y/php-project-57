@@ -15,13 +15,9 @@ class LabelController extends Controller
         return view('labels.index', compact('labels'));
     }
 
-    public function show(Label $label)
+    public function show()
     {
-        // Редирект на список меток или на редактирование
         return redirect()->route('labels.index');
-        
-        // Или если хотите на редактирование
-        // return redirect()->route('labels.edit', $label);
     }
 
     public function create()

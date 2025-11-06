@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 use App\Models\TaskStatus;
 use App\Policies\TaskStatusPolicy;

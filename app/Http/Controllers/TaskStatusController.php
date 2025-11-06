@@ -16,13 +16,9 @@ class TaskStatusController extends Controller
         return view('task_statuses.index', compact('taskStatuses'));
     }
 
-    public function show(TaskStatus $taskStatus)
+    public function show()
     {
-        // Просто редирект на индекс или покажите простой вид
         return redirect()->route('task_statuses.index');
-        
-        // ИЛИ если хотите оставить функциональность
-        // return view('task_statuses.show', compact('taskStatus'));
     }
 
     public function create()
