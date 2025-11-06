@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskStatusController;
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\LabelController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskStatusController;
 use App\Routes\AuthRoutes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,8 +28,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/logout', function () {
-        Auth::logout();
-        return redirect('/');
-    })->name('logout');
+    Auth::logout();
+
+    return redirect('/');
+})->name('logout');
 
 AuthRoutes::register();

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -14,43 +13,44 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private TaskStatus $status;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::factory()->create([ // Используем фабрику
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => bcrypt('password'),
         ]);
-        
+
         $this->status = TaskStatus::create([
             'name' => 'новый',
         ]);
     }
 
-    public function testIndex(): void
+    public function test_index(): void
     {
         $response = $this->get(route('tasks.index'));
         $response->assertOk();
     }
 
-    public function testCreateForGuest(): void
+    public function test_create_for_guest(): void
     {
         $response = $this->get(route('tasks.create'));
         $response->assertStatus(403);
     }
 
-    public function testCreateForAuthenticatedUser(): void
+    public function test_create_for_authenticated_user(): void
     {
         $this->actingAs($this->user);
         $response = $this->get(route('tasks.create'));
         $response->assertOk();
     }
 
-    public function testStoreForGuest(): void
+    public function test_store_for_guest(): void
     {
         $taskData = [
             'name' => 'Test Task',
@@ -67,13 +67,13 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function testStoreForAuthenticatedUser(): void
+    public function test_store_for_authenticated_user(): void
     {
         $this->actingAs($this->user);
-        
+
         // Проверим что пользователь действительно аутентифицирован
         $this->assertAuthenticatedAs($this->user);
-        
+
         $taskData = [
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -83,7 +83,7 @@ class TaskTest extends TestCase
 
         $response = $this->post(route('tasks.store'), $taskData);
         $response->assertRedirect(route('tasks.index'));
-        
+
         $this->assertDatabaseHas('tasks', [
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -93,7 +93,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function testShow(): void
+    public function test_show(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -107,7 +107,7 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
-    public function testEditForGuest(): void
+    public function test_edit_for_guest(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -121,10 +121,10 @@ class TaskTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testEditForAuthenticatedUser(): void
+    public function test_edit_for_authenticated_user(): void
     {
         $this->actingAs($this->user);
-        
+
         $task = Task::create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -137,7 +137,7 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
-    public function testUpdateForGuest(): void
+    public function test_update_for_guest(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -158,10 +158,10 @@ class TaskTest extends TestCase
         $this->assertDatabaseMissing('tasks', $updatedData);
     }
 
-    public function testUpdateForAuthenticatedUser(): void
+    public function test_update_for_authenticated_user(): void
     {
         $this->actingAs($this->user);
-        
+
         $task = Task::create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -182,7 +182,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', $updatedData);
     }
 
-    public function testDestroyForGuest(): void
+    public function test_destroy_for_guest(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -197,10 +197,10 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
     }
 
-    public function testDestroyForAuthenticatedUser(): void
+    public function test_destroy_for_authenticated_user(): void
     {
         $this->actingAs($this->user);
-        
+
         $task = Task::create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -214,10 +214,10 @@ class TaskTest extends TestCase
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
 
-    public function testValidation(): void
+    public function test_validation(): void
     {
         $this->actingAs($this->user);
-        
+
         // Test required name
         $response = $this->post(route('tasks.store'), [
             'description' => 'Test Description',

@@ -6,30 +6,30 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
     public function index(Request $request)
     {
         $data = $request->validate([
-            'filter' => "nullable|array"
+            'filter' => 'nullable|array',
         ]);
         $filter = [
             'status_id' => null,
             'creator_by_id' => null,
-            'assigned_by_id' => null
+            'assigned_by_id' => null,
         ];
 
         $filterTasks = QueryBuilder::for(Task::class);
 
-        if (!empty($data['filter'])) {
+        if (! empty($data['filter'])) {
             $filter = $data['filter'];
             foreach ($data['filter'] as $key => $value) {
-                if (!is_null($value)) {
+                if (! is_null($value)) {
                     $filterTasks = $filterTasks->where($key, $value);
                 }
             }
@@ -38,6 +38,7 @@ class TaskController extends Controller
         $tasks = $filterTasks->paginate();
         $taskStatuses = new TaskStatus();
         $users = new User();
+
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }
 
@@ -60,10 +61,10 @@ class TaskController extends Controller
     {
 
         Log::info('Store method called', [
-        'authenticated' => Auth::check(),
-        'user_id' => Auth::id(),
-        'request_data' => $request->all()
-    ]);
+            'authenticated' => Auth::check(),
+            'user_id' => Auth::id(),
+            'request_data' => $request->all(),
+        ]);
 
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -74,11 +75,11 @@ class TaskController extends Controller
             'labels.*' => 'exists:labels,id',
         ]);
 
-        if (!TaskStatus::where('id', $data['status_id'])->exists()) {
+        if (! TaskStatus::where('id', $data['status_id'])->exists()) {
             return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
         }
 
-        if (isset($data['assigned_by_id']) && !User::where('id', $data['assigned_by_id'])->exists()) {
+        if (isset($data['assigned_by_id']) && ! User::where('id', $data['assigned_by_id'])->exists()) {
             return redirect()->back()->withErrors(['assigned_by_id' => 'The selected user is invalid.']);
         }
 
@@ -131,11 +132,11 @@ class TaskController extends Controller
             'labels.*' => 'exists:labels,id',
         ]);
 
-        if (!TaskStatus::where('id', $data['status_id'])->exists()) {
+        if (! TaskStatus::where('id', $data['status_id'])->exists()) {
             return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
         }
 
-        if (isset($data['assigned_by_id']) && !User::where('id', $data['assigned_by_id'])->exists()) {
+        if (isset($data['assigned_by_id']) && ! User::where('id', $data['assigned_by_id'])->exists()) {
             return redirect()->back()->withErrors(['assigned_by_id' => 'The selected user is invalid.']);
         }
 
@@ -153,6 +154,7 @@ class TaskController extends Controller
         }
 
         flash('Task has been updated successfully!')->success();
+
         return redirect()->route('tasks.index');
     }
 
@@ -168,6 +170,7 @@ class TaskController extends Controller
         } else {
             flash(__('controllers.tasks_destroy_failed'))->error();
         }
+
         return redirect()->route('tasks.index');
     }
 }

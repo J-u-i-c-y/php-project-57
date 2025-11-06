@@ -13,5 +13,5 @@ return [
     'Name' => 'Имя',
     'Already registered?' => 'Уже зарегистрированы?',
     'Email Password Reset Link' => 'Ссылка для сброса пароля по электронной почте',
-    'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' => 'Забыл пароль? Не проблема. Просто укажи свой адрес электронной почты, и мы отправим тебе ссылку для сброса пароля, с помощью которой ты сможешь выбрать новый.'
+    'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.' => 'Забыл пароль? Не проблема. Просто укажи свой адрес электронной почты, и мы отправим тебе ссылку для сброса пароля, с помощью которой ты сможешь выбрать новый.',
 ];

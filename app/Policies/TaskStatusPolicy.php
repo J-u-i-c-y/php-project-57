@@ -22,16 +22,16 @@ class TaskStatusPolicy
 
     public function create(User $user): bool
     {
-        return !is_null($user);
+        return ! is_null($user);
     }
 
     public function update(User $user): bool
     {
-        return !is_null($user);
+        return ! is_null($user);
     }
 
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
-        return !is_null($user) && $taskStatus->tasks()->doesntExist();
+        return ! is_null($user) && $taskStatus->tasks()->doesntExist();
     }
 }

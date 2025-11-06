@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class AuthRoutesTest extends TestCase
 {

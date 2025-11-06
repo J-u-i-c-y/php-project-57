@@ -17,7 +17,7 @@ class TaskStatusTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -25,14 +25,14 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
-    public function testDeleteStatusWithTasks(): void
+    public function test_delete_status_with_tasks(): void
     {
         $this->actingAs($this->user);
-        
+
         $status = TaskStatus::create([
             'name' => 'Test Status',
         ]);
-        
+
         Task::create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -40,30 +40,30 @@ class TaskStatusTest extends TestCase
             'creator_by_id' => $this->user->id,
             'assigned_by_id' => $this->user->id,
         ]);
-        
+
         $response = $this->delete(route('task_statuses.destroy', $status));
-        
+
         $response->assertRedirect(route('task_statuses.index'));
         $response->assertSessionHas('flash_notification.0.level', 'error');
         $response->assertSessionHas('flash_notification.0.message', 'Не удалось удалить статус');
-        
+
         $this->assertDatabaseHas('task_statuses', ['id' => $status->id]);
     }
 
-    public function testDeleteStatusWithoutTasks(): void
+    public function test_delete_status_without_tasks(): void
     {
         $this->actingAs($this->user);
-        
+
         $status = TaskStatus::create([
             'name' => 'Test Status',
         ]);
-        
+
         $response = $this->delete(route('task_statuses.destroy', $status));
-        
+
         $response->assertRedirect(route('task_statuses.index'));
         $response->assertSessionHas('flash_notification.0.level', 'success');
         $response->assertSessionHas('flash_notification.0.message', 'Статус успешно удалён');
-        
+
         $this->assertDatabaseMissing('task_statuses', ['id' => $status->id]);
     }
 }
