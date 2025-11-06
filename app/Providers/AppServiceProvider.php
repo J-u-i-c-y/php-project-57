@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+// use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use App\Models\TaskStatus;
+use App\Policies\TaskStatusPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,4 +27,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
     }
+
+    protected $policies = [
+        TaskStatus::class => TaskStatusPolicy::class,
+    ];
 }

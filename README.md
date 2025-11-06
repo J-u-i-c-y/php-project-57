@@ -5,7 +5,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Evgenqwerty_php-project-57&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Evgenqwerty_php-project-57)    
 
 ### Render.com site:
-https://php-project-57-vvic.onrender.com/
+https://php-project-57-32rx.onrender.com/
 
 Cистема управления задачами. Позволяет создавать задачи, назначать исполнителей, 
 менять их статусы и ставить метки. Для работы с системой необходима регистрация и аутентификация.  
