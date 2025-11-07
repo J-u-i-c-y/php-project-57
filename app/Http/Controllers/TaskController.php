@@ -21,7 +21,7 @@ class TaskController extends Controller
         $filter = [
             'status_id' => null,
             'creator_by_id' => null,
-            'assigned_by_id' => null,
+            'assigned_to_id' => null,
         ];
 
         $filterTasks = QueryBuilder::for(Task::class);
@@ -73,7 +73,7 @@ class TaskController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status_id' => 'required',
-            'assigned_by_id' => 'nullable',
+            'assigned_to_id' => 'nullable',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);
@@ -82,13 +82,13 @@ class TaskController extends Controller
             return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
         }
 
-        if (isset($data['assigned_by_id']) && ! User::where('id', $data['assigned_by_id'])->exists()) {
-            return redirect()->back()->withErrors(['assigned_by_id' => 'The selected user is invalid.']);
+        if (isset($data['assigned_to_id']) && ! User::where('id', $data['assigned_to_id'])->exists()) {
+            return redirect()->back()->withErrors(['assigned_to_id' => 'The selected user is invalid.']);
         }
 
         $data['status_id'] = (int) $data['status_id'];
-        if (isset($data['assigned_by_id'])) {
-            $data['assigned_by_id'] = (int) $data['assigned_by_id'];
+        if (isset($data['assigned_to_id'])) {
+            $data['assigned_to_id'] = (int) $data['assigned_to_id'];
         }
 
         $task = new Task();
@@ -131,7 +131,7 @@ class TaskController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status_id' => 'required',
-            'assigned_by_id' => 'nullable',
+            'assigned_to_id' => 'nullable',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);
@@ -140,13 +140,13 @@ class TaskController extends Controller
             return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
         }
 
-        if (isset($data['assigned_by_id']) && ! User::where('id', $data['assigned_by_id'])->exists()) {
-            return redirect()->back()->withErrors(['assigned_by_id' => 'The selected user is invalid.']);
+        if (isset($data['assigned_to_id']) && ! User::where('id', $data['assigned_to_id'])->exists()) {
+            return redirect()->back()->withErrors(['assigned_to_id' => 'The selected user is invalid.']);
         }
 
         $data['status_id'] = (int) $data['status_id'];
-        if (isset($data['assigned_by_id'])) {
-            $data['assigned_by_id'] = (int) $data['assigned_by_id'];
+        if (isset($data['assigned_to_id'])) {
+            $data['assigned_to_id'] = (int) $data['assigned_to_id'];
         }
 
         $task->update($data);

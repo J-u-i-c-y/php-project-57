@@ -96,12 +96,11 @@ class LabelsTest extends TestCase
             $taskStatus = TaskStatus::create(['name' => 'Test Status']);
         }
 
-        // Создаем задачу с правильным именем поля creator_by_id
         $task = Task::create([
             'name' => 'Тестовая задача '.uniqid(),
             'description' => 'Описание задачи',
             'status_id' => $taskStatus->id,
-            'creator_by_id' => $this->user->id, // Исправлено с created_by_id на creator_by_id
+            'creator_by_id' => $this->user->id,
             'assigned_to_id' => $this->user->id,
         ]);
 
@@ -115,7 +114,6 @@ class LabelsTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        // Пытаемся создать метку без имени (обязательное поле)
         $response = $this->post(route('labels.store'), [
             'description' => 'Описание без имени',
         ]);
@@ -127,10 +125,8 @@ class LabelsTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        // Сначала создаем метку
         $label = Label::factory()->create(['name' => 'Уникальная метка']);
 
-        // Пытаемся создать метку с существующим именем
         $response = $this->post(route('labels.store'), [
             'name' => 'Уникальная метка',
         ]);
@@ -142,15 +138,12 @@ class LabelsTest extends TestCase
     {
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
 
-        // GET запросы - возвращают 403
         $this->get(route('labels.create'))->assertStatus(403);
         $this->get(route('labels.edit', $label))->assertStatus(403);
 
-        // POST/PUT запросы - возвращают 302 (редирект)
         $this->post(route('labels.store'), [])->assertStatus(302);
         $this->put(route('labels.update', $label), [])->assertStatus(302);
 
-        // DELETE запрос может возвращать либо 302, либо 403 - принимаем оба
         $response = $this->delete(route('labels.destroy', $label));
         $this->assertContains($response->getStatusCode(), [302, 403]);
     }

@@ -23,6 +23,9 @@
             <directory>app/Exceptions</directory>
             <directory>app/Http/Middleware</directory>
             <directory>app/Routes</directory>
+            <file>routes/web.php</file>
+            <file>routes/api.php</file>
+            <file>routes/auth.php</file>
         </exclude>
     </source>
 
