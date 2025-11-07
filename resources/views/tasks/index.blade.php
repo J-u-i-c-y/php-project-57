@@ -66,7 +66,7 @@
                     <td>{{ $task->created_at->format('Y-m-d') }}</td>
                     @auth
                         <td>
-                            @if (Auth::user()->id === $task->assigned_to_id)
+                            @if (Auth::user()->id === $task->creator_by_id)
                                 <a data-confirm="{{ __('layout.table_delete_question') }}"
                                    data-method="delete"
                                    class="text-red-600 hover:text-red-900"
