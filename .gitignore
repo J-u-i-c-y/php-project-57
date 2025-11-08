@@ -23,3 +23,5 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/resources/css/app.css.map
+/resources/js/app.js.map

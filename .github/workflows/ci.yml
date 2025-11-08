@@ -56,6 +56,18 @@ jobs:
     - name: Generate key
       run: php artisan key:generate
 
+
+    - name: Install and build assets
+      run: |
+        npm ci
+        npm run build
+
+    - name: Create Vite manifest fallback
+      run: |
+        mkdir -p public/build
+        # Это на случай если сборка не сработает
+        echo '{}' > public/build/manifest.json
+
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
 
