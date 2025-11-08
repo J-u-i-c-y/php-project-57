@@ -17,7 +17,7 @@ lint-fix:
 
 
 migrate:
-	php artisan migrate
+	php artisan migrate:fresh
 
 console:
 	php artisan tinker
