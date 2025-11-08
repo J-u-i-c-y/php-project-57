@@ -16,10 +16,10 @@
                         </select>
 
 
-                        <select class="rounded border-gray-300" name="filter[creator_by_id]" id="filter[creator_by_id]">
+                        <select class="rounded border-gray-300" name="filter[created_by_id]" id="filter[created_by_id]">
                             <option value selected="selected">{{ __('layout.table_creater') }}</option>
                             @foreach ($users->all() as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == $filter['creator_by_id'] ? 'selected' : '' }}>{{ $user->name }}</option>
+                                <option value="{{ $user->id }}" {{ $user->id == $filter['created_by_id'] ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                         </select>
 
@@ -61,12 +61,12 @@
                     <td>{{ $task->id }}</td>
                     <td>{{ $taskStatuses::find($task->status_id)->name }}</td>
                     <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->name }}</a></td>
-                    <td>{{ $users::find($task->creator_by_id)->name }}</td>
+                    <td>{{ $users::find($task->created_by_id)->name }}</td>
                     <td>{{ $users::find($task->assigned_to_id)->name ?? '' }}</td>
                     <td>{{ $task->created_at->format('Y-m-d') }}</td>
                     @auth
                         <td>
-                            @if (Auth::user()->id === $task->creator_by_id)
+                            @if (Auth::user()->id === $task->created_by_id)
                                 <a data-confirm="{{ __('layout.table_delete_question') }}"
                                    data-method="delete"
                                    class="text-red-600 hover:text-red-900"

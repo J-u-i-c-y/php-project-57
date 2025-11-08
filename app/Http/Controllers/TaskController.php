@@ -20,7 +20,7 @@ class TaskController extends Controller
         ]);
         $filter = [
             'status_id' => null,
-            'creator_by_id' => null,
+            'created_by_id' => null,
             'assigned_to_id' => null,
         ];
 
@@ -93,7 +93,7 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->fill($data);
-        $task->creator_by_id = Auth::id();
+        $task->created_by_id = Auth::id();
         $task->save();
 
         if (isset($data['labels'])) {
@@ -127,6 +127,10 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
+        if (Auth::guest()) {
+            return abort(403);
+        }
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -167,7 +171,7 @@ class TaskController extends Controller
         if (Auth::guest()) {
             return abort(403);
         }
-        if (Auth::id() === $task->creator_by_id) {
+        if (Auth::id() === $task->created_by_id) {
             $task->labels()->detach();
             $task->delete();
             flash(__('controllers.tasks_destroy'))->success();

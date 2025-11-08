@@ -100,7 +100,7 @@ class LabelsTest extends TestCase
             'name' => 'Тестовая задача '.uniqid(),
             'description' => 'Описание задачи',
             'status_id' => $taskStatus->id,
-            'creator_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
             'assigned_to_id' => $this->user->id,
         ]);
 

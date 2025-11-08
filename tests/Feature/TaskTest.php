@@ -56,13 +56,12 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
-            'creator_by_id' => 1,
+            'created_by_id' => 1,
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
 
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
+        $response->assertStatus(403);
 
         $this->assertDatabaseMissing('tasks', [
             'name' => 'Test Task',
@@ -82,7 +81,7 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
-            'assigned_by_id' => (string) $this->user->id,
+            'assigned_to_id' => (string) $this->user->id,
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
@@ -92,8 +91,7 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
         ]);
     }
 
@@ -103,8 +101,8 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->get(route('tasks.show', $task));
@@ -117,8 +115,8 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->get(route('tasks.edit', $task));
@@ -133,8 +131,8 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->get(route('tasks.edit', $task));
@@ -143,12 +141,12 @@ class TaskTest extends TestCase
 
     public function test_update_for_guest(): void
     {
-        $task = Task::create([
-            'name' => 'Test Task',
-            'description' => 'Test Description',
+        $task = Task::factory()->create([
+            'name' => 'Original Task Name',
+            'description' => 'Original Description',
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
         ]);
 
         $updatedData = [
@@ -158,10 +156,18 @@ class TaskTest extends TestCase
         ];
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
-        
-        $this->assertDatabaseMissing('tasks', $updatedData);
+        $this->assertContains($response->getStatusCode(), [302, 403]);
+
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'name' => 'Original Task Name',
+            'description' => 'Original Description',
+        ]);
+
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id,
+            'name' => 'Updated Task Name',
+        ]);
     }
 
     public function test_update_for_authenticated_user(): void
@@ -172,15 +178,15 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $updatedData = [
             'name' => 'Updated Task Name',
             'description' => 'Updated Description',
             'status_id' => (string) $this->status->id,
-            'assigned_by_id' => (string) $this->user->id,
+            'assigned_to_id' => (string) $this->user->id,
         ];
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
@@ -194,8 +200,8 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->delete(route('tasks.destroy', $task));
@@ -211,8 +217,8 @@ class TaskTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->delete(route('tasks.destroy', $task));

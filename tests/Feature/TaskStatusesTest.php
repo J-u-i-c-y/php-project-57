@@ -37,8 +37,8 @@ class TaskStatusTest extends TestCase
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $status->id,
-            'creator_by_id' => $this->user->id,
-            'assigned_by_id' => $this->user->id,
+            'created_by_id' => $this->user->id,
+            'assigned_to_id' => $this->user->id,
         ]);
 
         $response = $this->delete(route('task_statuses.destroy', $status));

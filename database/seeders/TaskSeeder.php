@@ -20,7 +20,7 @@ class TaskSeeder extends Seeder
                 'description' => 'Описание первой задачи',
                 'status_id' => $status->id,
                 'created_by_id' => $user->id,
-                'assigned_by_id' => $user->id,
+                'assigned_to_id' => $user->id,
             ]);
         }
     }
