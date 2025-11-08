@@ -44,7 +44,9 @@
                 {{ __('auth.Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">Зарегистрировать</x-primary-button>
+            <x-primary-button class="ms-4">
+                {{ __('auth.Register') }}
+            </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
