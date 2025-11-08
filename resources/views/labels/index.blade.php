@@ -28,7 +28,7 @@
                     <td>{{ $label->id }}</td>
                     <td>{{ $label->name }}</td>
                     <td>{{ $label->description }}</td>
-                    <td>{{ $label->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $label->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
                             <form action="{{ route('labels.destroy', $label) }}" method="POST" class="inline-block">

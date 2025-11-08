@@ -63,7 +63,7 @@
                     <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->name }}</a></td>
                     <td>{{ $users::find($task->created_by_id)->name }}</td>
                     <td>{{ $users::find($task->assigned_to_id)->name ?? '' }}</td>
-                    <td>{{ $task->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $task->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
                             @if (Auth::user()->id === $task->created_by_id)

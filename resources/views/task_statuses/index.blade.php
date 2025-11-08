@@ -25,7 +25,7 @@
                 <tr class="border-b border-dashed text-left">
                     <td>{{ $status->id }}</td>
                     <td>{{ $status->name }}</td>
-                    <td>{{ $status->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $status->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
                             {{-- Форма удаления --}}
