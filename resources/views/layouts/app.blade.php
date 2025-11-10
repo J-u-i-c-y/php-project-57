@@ -22,24 +22,12 @@
                 </a>
                 <div class="flex items-center lg:order-2">
                     @guest
-                        <!-- <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <a href="/login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             {{ __('auth.Log in') }}
                         </a>
                         <a href="/register" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                             {{ __('auth.Register') }}
-                        </a> -->
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-                                {{ __('auth.Log in') }}
-                            </button>
-                        </form>
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-                                {{ __('auth.Register') }}
-                            </button>
-                        </form>
+                        </a>
                     @endguest
                     @auth
                         <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"> {{ __('layout.logout') }} </a>

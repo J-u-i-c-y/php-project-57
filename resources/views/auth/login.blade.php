@@ -39,9 +39,9 @@
                 </a>
             @endif
 
-            <button class="ms-3">
+            <x-primary-button class="ms-3">
                 {{ __('auth.Log in') }}
-            </button>
+            </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
