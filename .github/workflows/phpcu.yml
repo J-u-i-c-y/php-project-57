@@ -1,0 +1,65 @@
+name: PHP CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ['8.4']
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Setup project
+        run: make setup
+
+      - name: Check lint
+        run: make lint
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: make test-coverage
+
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: build/logs/clover.xml
+      #     fail_ci_if_error: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          cache-from: ghcr.io/${{ github.repository }}:latest
+          cache-to: type=inline
+          tags: ghcr.io/${{ github.repository }}:latest
