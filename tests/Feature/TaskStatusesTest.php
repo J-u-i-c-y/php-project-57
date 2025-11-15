@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TaskStatusTest extends TestCase
+class TaskStatusesTest extends TestCase
 {
     use RefreshDatabase;
 
