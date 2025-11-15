@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1763222927">
-  <project timestamp="1763222927" name="Clover Coverage">
+<coverage generated="1763226144">
+  <project timestamp="1763226144" name="Clover Coverage">
     <package name="App\Http\Controllers\Auth">
       <file name="/Users/user/Documents/Projects/php-project-57/app/Http/Controllers/Auth/AuthenticatedSessionController.php">
         <class name="App\Http\Controllers\Auth\AuthenticatedSessionController" namespace="App\Http\Controllers\Auth">
@@ -344,7 +344,7 @@
       </file>
       <file name="/Users/user/Documents/Projects/php-project-57/app/Http/Controllers/TaskStatusController.php">
         <class name="App\Http\Controllers\TaskStatusController" namespace="App\Http\Controllers">
-          <metrics complexity="11" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="39" coveredelements="0"/>
+          <metrics complexity="11" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="7" elements="39" coveredelements="7"/>
         </class>
         <line num="11" type="method" name="index" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="13" type="stmt" count="0"/>
@@ -376,16 +376,16 @@
         <line num="61" type="stmt" count="0"/>
         <line num="62" type="stmt" count="0"/>
         <line num="64" type="stmt" count="0"/>
-        <line num="67" type="method" name="destroy" visibility="public" complexity="3" crap="12" count="0"/>
-        <line num="69" type="stmt" count="0"/>
+        <line num="67" type="method" name="destroy" visibility="public" complexity="3" crap="3.02" count="2"/>
+        <line num="69" type="stmt" count="2"/>
         <line num="70" type="stmt" count="0"/>
-        <line num="73" type="stmt" count="0"/>
-        <line num="74" type="stmt" count="0"/>
-        <line num="76" type="stmt" count="0"/>
-        <line num="79" type="stmt" count="0"/>
-        <line num="81" type="stmt" count="0"/>
-        <line num="83" type="stmt" count="0"/>
-        <metrics loc="86" ncloc="86" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="39" coveredelements="0"/>
+        <line num="73" type="stmt" count="2"/>
+        <line num="74" type="stmt" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="79" type="stmt" count="1"/>
+        <line num="81" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <metrics loc="86" ncloc="86" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="7" elements="39" coveredelements="7"/>
       </file>
     </package>
     <package name="App\Http\Requests\Auth">
@@ -469,21 +469,21 @@
       </file>
       <file name="/Users/user/Documents/Projects/php-project-57/app/Models/TaskStatus.php">
         <class name="App\Models\TaskStatus" namespace="App\Models">
-          <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+          <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
         </class>
-        <line num="14" type="method" name="tasks" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <metrics loc="19" ncloc="19" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+        <line num="14" type="method" name="tasks" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="16" type="stmt" count="2"/>
+        <metrics loc="19" ncloc="19" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </file>
       <file name="/Users/user/Documents/Projects/php-project-57/app/Models/User.php">
         <class name="App\Models\User" namespace="App\Models">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
         </class>
-        <line num="41" type="method" name="casts" visibility="protected" complexity="1" crap="1" count="41"/>
-        <line num="43" type="stmt" count="41"/>
-        <line num="44" type="stmt" count="41"/>
-        <line num="45" type="stmt" count="41"/>
-        <line num="46" type="stmt" count="41"/>
+        <line num="41" type="method" name="casts" visibility="protected" complexity="1" crap="1" count="43"/>
+        <line num="43" type="stmt" count="43"/>
+        <line num="44" type="stmt" count="43"/>
+        <line num="45" type="stmt" count="43"/>
+        <line num="46" type="stmt" count="43"/>
         <metrics loc="49" ncloc="33" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="5" coveredelements="5"/>
       </file>
     </package>
@@ -510,12 +510,12 @@
         <class name="App\Providers\AppServiceProvider" namespace="App\Providers">
           <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
         </class>
-        <line num="15" type="method" name="register" visibility="public" complexity="1" crap="1" count="48"/>
-        <line num="18" type="stmt" count="48"/>
-        <line num="23" type="method" name="boot" visibility="public" complexity="2" crap="2" count="48"/>
-        <line num="25" type="stmt" count="48"/>
-        <line num="27" type="stmt" count="48"/>
-        <line num="28" type="stmt" count="48"/>
+        <line num="15" type="method" name="register" visibility="public" complexity="1" crap="1" count="50"/>
+        <line num="18" type="stmt" count="50"/>
+        <line num="23" type="method" name="boot" visibility="public" complexity="2" crap="2" count="50"/>
+        <line num="25" type="stmt" count="50"/>
+        <line num="27" type="stmt" count="50"/>
+        <line num="28" type="stmt" count="50"/>
         <metrics loc="36" ncloc="29" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
       </file>
     </package>
@@ -537,6 +537,6 @@
         <metrics loc="18" ncloc="15" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </file>
     </package>
-    <metrics files="24" loc="1141" ncloc="1013" classes="23" methods="61" coveredmethods="36" conditionals="0" coveredconditionals="0" statements="315" coveredstatements="248" elements="376" coveredelements="284"/>
+    <metrics files="24" loc="1141" ncloc="1013" classes="23" methods="61" coveredmethods="37" conditionals="0" coveredconditionals="0" statements="315" coveredstatements="256" elements="376" coveredelements="293"/>
   </project>
 </coverage>

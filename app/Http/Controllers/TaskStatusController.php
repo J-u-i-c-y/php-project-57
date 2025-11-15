@@ -33,6 +33,8 @@ class TaskStatusController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|unique:task_statuses',
+        ], [
+            'name.unique' => __('controllers.unique_error_status'),
         ]);
 
         $taskStatus = new TaskStatus();
