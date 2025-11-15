@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1762640365">
-  <project timestamp="1762640365" name="Clover Coverage">
+<coverage generated="1763222927">
+  <project timestamp="1763222927" name="Clover Coverage">
     <package name="App\Http\Controllers\Auth">
       <file name="/Users/user/Documents/Projects/php-project-57/app/Http/Controllers/Auth/AuthenticatedSessionController.php">
         <class name="App\Http\Controllers\Auth\AuthenticatedSessionController" namespace="App\Http\Controllers\Auth">
@@ -508,14 +508,15 @@
     <package name="App\Providers">
       <file name="/Users/user/Documents/Projects/php-project-57/app/Providers/AppServiceProvider.php">
         <class name="App\Providers\AppServiceProvider" namespace="App\Providers">
-          <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+          <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
         </class>
         <line num="15" type="method" name="register" visibility="public" complexity="1" crap="1" count="48"/>
         <line num="18" type="stmt" count="48"/>
         <line num="23" type="method" name="boot" visibility="public" complexity="2" crap="2" count="48"/>
         <line num="25" type="stmt" count="48"/>
-        <line num="26" type="stmt" count="48"/>
-        <metrics loc="34" ncloc="27" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+        <line num="27" type="stmt" count="48"/>
+        <line num="28" type="stmt" count="48"/>
+        <metrics loc="36" ncloc="29" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="6" coveredelements="6"/>
       </file>
     </package>
     <package name="App\View\Components">
@@ -536,6 +537,6 @@
         <metrics loc="18" ncloc="15" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </file>
     </package>
-    <metrics files="24" loc="1139" ncloc="1011" classes="23" methods="61" coveredmethods="36" conditionals="0" coveredconditionals="0" statements="314" coveredstatements="247" elements="375" coveredelements="283"/>
+    <metrics files="24" loc="1141" ncloc="1013" classes="23" methods="61" coveredmethods="36" conditionals="0" coveredconditionals="0" statements="315" coveredstatements="248" elements="376" coveredelements="284"/>
   </project>
 </coverage>
