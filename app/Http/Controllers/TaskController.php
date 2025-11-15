@@ -163,7 +163,7 @@ class TaskController extends Controller
             $task->labels()->detach();
         }
 
-        flash('Task has been updated successfully!')->success();
+        flash(__('controllers.tasks_update'))->success();
 
         return redirect()->route('tasks.index');
     }
