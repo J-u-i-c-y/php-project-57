@@ -34,6 +34,8 @@ class LabelController extends Controller
         $data = $request->validate([
             'name' => 'required|unique:labels',
             'description' => 'max:1000',
+        ], [
+            'name.unique' => __('controllers.unique_error_label'),
         ]);
 
         $label = new Label();

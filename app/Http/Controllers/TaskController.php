@@ -76,6 +76,8 @@ class TaskController extends Controller
             'assigned_to_id' => 'nullable',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
+        ], [
+            'name.required' => __('controllers.unique_error_task'),
         ]);
 
         if (! TaskStatus::where('id', $data['status_id'])->exists()) {
