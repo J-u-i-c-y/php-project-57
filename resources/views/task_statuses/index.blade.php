@@ -28,7 +28,7 @@
                     <td>{{ $status->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
-                            {{-- Форма удаления --}}
+                            <!-- {{-- Форма удаления --}}
                             <form action="{{ route('task_statuses.destroy', $status) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
@@ -37,7 +37,8 @@
                                         onclick="return confirm('Вы уверены?');">
                                     {{ __('layout.table_delete') }}
                                 </button>
-                            </form>
+                            </form> -->
+                            <a href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete" rel="nofollow">{{ __('layout.table_delete') }}</a>
                             <span class="mx-2">|</span>
                             <a class="text-blue-600 hover:text-blue-900"
                                href="{{ route('task_statuses.edit', $status) }}">{{ __('layout.table_edit') }}</a>

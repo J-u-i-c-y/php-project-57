@@ -31,7 +31,7 @@
                     <td>{{ $label->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
-                            <form action="{{ route('labels.destroy', $label) }}" method="POST" class="inline-block">
+                            <!-- <form action="{{ route('labels.destroy', $label) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
@@ -39,7 +39,9 @@
                                         onclick="return confirm('Вы уверены?');">
                                     {{ __('layout.table_delete') }}
                                 </button>
-                            </form>
+                            </form> -->
+                            <a href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" data-method="delete" rel="nofollow">{{ __('layout.table_delete') }}</a>
+                            
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">
                                 {{ __('layout.table_edit') }}</a>
                             
