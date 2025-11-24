@@ -83,6 +83,13 @@ jobs:
         DB_USERNAME: postgres
         DB_PASSWORD: postgres
 
+    - name: Upload coverage report to artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage.xml
+        retention-days: 1
+
   sonarqube:
     name: SonarQube
     runs-on: ubuntu-latest

@@ -9,7 +9,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
@@ -18,26 +20,24 @@ class TaskController extends Controller
         $data = $request->validate([
             'filter' => 'nullable|array',
         ]);
-        $filter = [
-            'status_id' => null,
-            'created_by_id' => null,
-            'assigned_to_id' => null,
-        ];
 
-        $filterTasks = QueryBuilder::for(Task::class);
-
-        if (! empty($data['filter'])) {
-            $filter = $data['filter'];
-            foreach ($data['filter'] as $key => $value) {
-                if (! is_null($value)) {
-                    $filterTasks = $filterTasks->where($key, $value);
-                }
-            }
-        }
+        $filterTasks = QueryBuilder::for(Task::class)
+        ->allowedFilters([
+            AllowedFilter::exact('status_id'),
+            AllowedFilter::exact('created_by_id'),
+            AllowedFilter::exact('assigned_to_id'),
+        ])
+        ->with(['status', 'createdBy', 'assignedTo']);
 
         $tasks = $filterTasks->paginate();
-        $taskStatuses = new TaskStatus();
-        $users = new User();
+        $taskStatuses = TaskStatus::all();
+        $users = User::all();
+
+        $filter = [
+            'status_id' => $request->input('filter.status_id'),
+            'created_by_id' => $request->input('filter.created_by_id'),
+            'assigned_to_id' => $request->input('filter.assigned_to_id'),
+        ];
 
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }
@@ -72,21 +72,21 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status_id' => 'required',
-            'assigned_to_id' => 'nullable',
+            'status_id' => [
+                'required',
+                Rule::exists('task_statuses', 'id')
+            ],
+            'assigned_to_id' => [
+                'nullable',
+                Rule::exists('users', 'id')
+            ],
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ], [
             'name.required' => __('controllers.unique_error_task'),
+            'status_id.exists' => 'The selected status is invalid.',
+            'assigned_to_id.exists' => 'The selected user is invalid.',
         ]);
-
-        if (! TaskStatus::where('id', $data['status_id'])->exists()) {
-            return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
-        }
-
-        if (isset($data['assigned_to_id']) && ! User::where('id', $data['assigned_to_id'])->exists()) {
-            return redirect()->back()->withErrors(['assigned_to_id' => 'The selected user is invalid.']);
-        }
 
         $data['status_id'] = (int) $data['status_id'];
         if (isset($data['assigned_to_id'])) {
