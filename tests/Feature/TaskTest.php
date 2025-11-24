@@ -31,26 +31,26 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function test_index(): void
+    public function testIndex(): void
     {
         $response = $this->get(route('tasks.index'));
         $response->assertOk();
     }
 
-    public function test_create_for_guest(): void
+    public function testCreateForGuest(): void
     {
         $response = $this->get(route('tasks.create'));
         $response->assertStatus(403);
     }
 
-    public function test_create_for_authenticated_user(): void
+    public function testCreateForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
         $response = $this->get(route('tasks.create'));
         $response->assertOk();
     }
 
-    public function test_store_for_guest(): void
+    public function testStoreForGuest(): void
     {
         $taskData = [
             'name' => 'Test Task',
@@ -70,7 +70,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function test_store_for_authenticated_user(): void
+    public function testStoreForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
 
@@ -95,7 +95,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function test_show(): void
+    public function testShow(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -109,7 +109,7 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_edit_for_guest(): void
+    public function testEditForGuest(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -123,7 +123,7 @@ class TaskTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_edit_for_authenticated_user(): void
+    public function testEditForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
 
@@ -139,7 +139,7 @@ class TaskTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_update_for_guest(): void
+    public function testUpdateForGuest(): void
     {
         $task = Task::factory()->create([
             'name' => 'Original Task Name',
@@ -170,7 +170,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    public function test_update_for_authenticated_user(): void
+    public function testUpdateForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
 
@@ -194,7 +194,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', $updatedData);
     }
 
-    public function test_destroy_for_guest(): void
+    public function testDestroyForGuest(): void
     {
         $task = Task::create([
             'name' => 'Test Task',
@@ -209,7 +209,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
     }
 
-    public function test_destroy_for_authenticated_user(): void
+    public function testDestroyForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
 
@@ -226,7 +226,7 @@ class TaskTest extends TestCase
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
 
-    public function test_validation(): void
+    public function testValidation(): void
     {
         $this->actingAs($this->user);
 

@@ -25,7 +25,7 @@ class TaskStatusesTest extends TestCase
         ]);
     }
 
-    public function test_delete_status_with_tasks(): void
+    public function testDeleteStatusWithTasks(): void
     {
         $this->actingAs($this->user);
 
@@ -44,13 +44,13 @@ class TaskStatusesTest extends TestCase
         $response = $this->delete(route('task_statuses.destroy', $status));
 
         $response->assertRedirect(route('task_statuses.index'));
-        $response->assertSessionHas('flash_notification.0.level', 'error');
+        $response->assertSessionHas('flash_notification.0.level', 'danger');
         $response->assertSessionHas('flash_notification.0.message', 'Не удалось удалить статус');
 
         $this->assertDatabaseHas('task_statuses', ['id' => $status->id]);
     }
 
-    public function test_delete_status_without_tasks(): void
+    public function testDeleteStatusWithoutTasks(): void
     {
         $this->actingAs($this->user);
 

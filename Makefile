@@ -13,8 +13,7 @@ lint:
 	composer exec --verbose phpcs -- --standard=PSR12 app
 
 lint-fix:
-	./vendor/bin/pint
-
+	composer exec --verbose phpcbf -- --standard=PSR12 app tests
 
 migrate:
 	php artisan migrate:fresh

@@ -23,7 +23,7 @@ class LabelsTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_labels_screen_can_be_rendered(): void
+    public function testLabelsScreenCanBeRendered(): void
     {
         // Создаем метку прямо в тесте
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
@@ -33,7 +33,7 @@ class LabelsTest extends TestCase
         $response->assertSee('Тестовая метка');
     }
 
-    public function test_create_label(): void
+    public function testCreateLabel(): void
     {
         // Неавторизованный пользователь не может создать метку
         $response = $this->get(route('labels.create'));
@@ -47,14 +47,14 @@ class LabelsTest extends TestCase
 
         // Создаем новую метку
         $response = $this->post(route('labels.store'), [
-            'name' => 'Новая тестовая метка '.uniqid(), // Уникальное имя
+            'name' => 'Новая тестовая метка ' . uniqid(), // Уникальное имя
             'description' => 'Описание метки',
         ]);
 
         $response->assertRedirect(route('labels.index'));
     }
 
-    public function test_edit_label(): void
+    public function testEditLabel(): void
     {
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
 
@@ -76,7 +76,7 @@ class LabelsTest extends TestCase
         $response->assertRedirect(route('labels.index'));
     }
 
-    public function test_delete_unused_label(): void
+    public function testDeleteUnusedLabel(): void
     {
         $label = Label::factory()->create(['name' => 'Метка для удаления']);
         $this->actingAs($this->user);
@@ -85,7 +85,7 @@ class LabelsTest extends TestCase
         $response->assertRedirect(route('labels.index'));
     }
 
-    public function test_cannot_delete_label_used_in_task(): void
+    public function testCannotDeleteLabelUsedInTask(): void
     {
         $label = Label::factory()->create(['name' => 'Используемая метка']);
         $this->actingAs($this->user);
@@ -97,7 +97,7 @@ class LabelsTest extends TestCase
         }
 
         $task = Task::create([
-            'name' => 'Тестовая задача '.uniqid(),
+            'name' => 'Тестовая задача ' . uniqid(),
             'description' => 'Описание задачи',
             'status_id' => $taskStatus->id,
             'created_by_id' => $this->user->id,
@@ -110,7 +110,7 @@ class LabelsTest extends TestCase
         $response->assertRedirect();
     }
 
-    public function test_validation_for_label_creation(): void
+    public function testValidationForLabelCreation(): void
     {
         $this->actingAs($this->user);
 
@@ -121,7 +121,7 @@ class LabelsTest extends TestCase
         $response->assertSessionHasErrors(['name']);
     }
 
-    public function test_unique_name_validation(): void
+    public function testUniqueNamValidation(): void
     {
         $this->actingAs($this->user);
 
@@ -134,7 +134,7 @@ class LabelsTest extends TestCase
         $response->assertSessionHasErrors(['name']);
     }
 
-    public function test_guest_cannot_access_protected_routes(): void
+    public function testGuestCannotAccessProtectedRoutes(): void
     {
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
 
