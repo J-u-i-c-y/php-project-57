@@ -15,10 +15,12 @@ class LabelsTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
+    /** @var \App\Models\User */
     private $user;
 
     protected function setUp(): void
     {
+        /** @var \App\Models\User $user */
         parent::setUp();
         $this->user = User::factory()->create();
     }
@@ -87,6 +89,7 @@ class LabelsTest extends TestCase
 
     public function testCannotDeleteLabelUsedInTask(): void
     {
+        /** @var \App\Models\Label $label */
         $label = Label::factory()->create(['name' => 'Используемая метка']);
         $this->actingAs($this->user);
 
