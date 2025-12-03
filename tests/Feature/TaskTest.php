@@ -141,6 +141,7 @@ class TaskTest extends TestCase
 
     public function testUpdateForGuest(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Original Task Name',
             'description' => 'Original Description',

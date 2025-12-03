@@ -92,11 +92,9 @@ class LabelsTest extends TestCase
 
         // Создаем статус если нет существующего
         $taskStatus = TaskStatus::first();
-        if (! $taskStatus) {
-            $taskStatus = TaskStatus::create(['name' => 'Test Status']);
-        }
+        $taskStatus = TaskStatus::first() ?? TaskStatus::factory()->create(['name' => 'Test Status']);
 
-        $task = Task::create([
+        $task = Task::factory()->create([
             'name' => 'Тестовая задача ' . uniqid(),
             'description' => 'Описание задачи',
             'status_id' => $taskStatus->id,
