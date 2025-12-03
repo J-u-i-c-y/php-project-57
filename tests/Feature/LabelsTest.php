@@ -20,9 +20,11 @@ class LabelsTest extends TestCase
 
     protected function setUp(): void
     {
-        /** @var \App\Models\User $user */
         parent::setUp();
-        $this->user = User::factory()->create();
+
+        /** @var \App\Models\User $user */
+        $user = User::factory()->create();
+        $this->user = $user;
     }
 
     public function testLabelsScreenCanBeRendered(): void
