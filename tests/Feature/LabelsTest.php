@@ -90,8 +90,10 @@ class LabelsTest extends TestCase
         $label = Label::factory()->create(['name' => 'Используемая метка']);
         $this->actingAs($this->user);
 
+        /** @var TaskStatus $taskStatus */
         $taskStatus = TaskStatus::first() ?? TaskStatus::factory()->create(['name' => 'Test Status']);
 
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Тестовая задача ' . uniqid(),
             'description' => 'Описание задачи',
