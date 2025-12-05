@@ -1,10 +1,50 @@
 
 
-[1;37;40mCode Coverage Report:    [0m
-[1;37;40m  2025-12-03 12:05:36    [0m
-[1;37;40m                         [0m
-[1;37;40m Summary:                [0m
-[37;41m  Classes:  0.00% (0/23) [0m
-[37;41m  Methods:  0.00% (0/62) [0m
-[37;41m  Lines:    0.00% (0/327)[0m
+[1;37;40mCode Coverage Report:      [0m
+[1;37;40m  2025-12-05 13:29:07      [0m
+[1;37;40m                           [0m
+[1;37;40m Summary:                  [0m
+[30;43m  Classes: 59.09% (13/22)  [0m
+[30;43m  Methods: 60.00% (36/60)  [0m
+[30;43m  Lines:   82.66% (267/323)[0m
 
+App\Http\Controllers\Auth\AuthenticatedSessionController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% (  9/  9)[0m
+App\Http\Controllers\Auth\ConfirmablePasswordController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 10/ 10)[0m
+App\Http\Controllers\Auth\EmailVerificationPromptController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  66.67% (  2/  3)[0m
+App\Http\Controllers\Auth\NewPasswordController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 20/ 20)[0m
+App\Http\Controllers\Auth\PasswordController
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  8/  8)[0m
+App\Http\Controllers\Auth\PasswordResetLinkController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 11/ 11)[0m
+App\Http\Controllers\Auth\RegisteredUserController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 14/ 14)[0m
+App\Http\Controllers\Auth\VerifyEmailController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  80.00% (  4/  5)[0m
+App\Http\Controllers\LabelController
+  [30;43mMethods:  85.71% ( 6/ 7)[0m   [30;42mLines:  97.22% ( 35/ 36)[0m
+App\Http\Controllers\ProfileController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% ( 17/ 17)[0m
+App\Http\Controllers\TaskController
+  [30;43mMethods:  57.14% ( 4/ 7)[0m   [30;42mLines:  95.00% ( 95/100)[0m
+App\Http\Controllers\TaskStatusController
+  [37;41mMethods:   0.00% ( 0/ 7)[0m   [37;41mLines:  20.59% (  7/ 34)[0m
+App\Http\Requests\Auth\LoginRequest
+  [30;43mMethods:  80.00% ( 4/ 5)[0m   [30;43mLines:  65.22% ( 15/ 23)[0m
+App\Http\Requests\ProfileUpdateRequest
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% ( 11/ 11)[0m
+App\Models\Label
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\Models\Task
+  [37;41mMethods:  20.00% ( 1/ 5)[0m   [37;41mLines:  20.00% (  1/  5)[0m
+App\Models\TaskStatus
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\Models\User
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  4/  4)[0m
+App\View\Components\AppLayout
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\View\Components\GuestLayout
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
