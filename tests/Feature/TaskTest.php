@@ -13,20 +13,19 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
-
     private TaskStatus $status;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create([ // Используем фабрику
+        $this->user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => bcrypt('password'),
         ]);
 
-        $this->status = TaskStatus::create([
+        $this->status = TaskStatus::factory()->create([
             'name' => 'новый',
         ]);
     }
@@ -60,7 +59,6 @@ class TaskTest extends TestCase
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
-
         $response->assertStatus(403);
 
         $this->assertDatabaseMissing('tasks', [
@@ -73,8 +71,6 @@ class TaskTest extends TestCase
     public function testStoreForAuthenticatedUser(): void
     {
         $this->actingAs($this->user);
-
-        // Проверим что пользователь действительно аутентифицирован
         $this->assertAuthenticatedAs($this->user);
 
         $taskData = [
@@ -97,9 +93,7 @@ class TaskTest extends TestCase
 
     public function testShow(): void
     {
-        $task = Task::create([
-            'name' => 'Test Task',
-            'description' => 'Test Description',
+        $task = Task::factory()->create([
             'status_id' => $this->status->id,
             'created_by_id' => $this->user->id,
             'assigned_to_id' => $this->user->id,
@@ -175,7 +169,7 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $task = Task::create([
+        $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
@@ -197,7 +191,7 @@ class TaskTest extends TestCase
 
     public function testDestroyForGuest(): void
     {
-        $task = Task::create([
+        $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
@@ -214,7 +208,7 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $task = Task::create([
+        $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
@@ -231,14 +225,12 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        // Test required name
         $response = $this->post(route('tasks.store'), [
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
         ]);
         $response->assertSessionHasErrors('name');
 
-        // Test required status_id
         $response = $this->post(route('tasks.store'), [
             'name' => 'Test Task',
             'description' => 'Test Description',
