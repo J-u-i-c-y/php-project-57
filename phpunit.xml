@@ -19,19 +19,17 @@
             <directory>app</directory>
         </include>
         <exclude>
-            <directory>app/Console</directory>
-            <directory>app/Providers</directory>
-            <directory>app/Exceptions</directory>
-            <directory>app/Http</directory>
+            <directory>app/Http/Middleware</directory>
             <directory>app/Routes</directory>
-            <directory>lang</directory>
-            <directory>resources/views</directory>
-            <directory>config</directory>
-            <directory>public</directory>
-            <directory>database</directory>
-            <file>routes/web.php</file>
-            <file>routes/api.php</file>
-            <file>routes/auth.php</file>
+            <directory>./routes</directory>
+            <directory>./database</directory>
+            <directory>./resources/views</directory>
+            <directory>./config</directory>
+            <directory>./lang</directory>
+            <directory>./public</directory>
+            <directory>./app/Providers</directory>
+            <directory>./app/Console</directory>
+            <directory>./app/Exceptions</directory>
         </exclude>
     </source>
 
