@@ -19,8 +19,8 @@
             <directory suffix=".php">./app/Models</directory>
         </include>
         <exclude>
-            <directory>app/Http/Middleware</directory>
-            <directory>app/Routes</directory>
+            <directory>./app/Http/Middleware</directory>
+            <directory>./app/Routes</directory>
             <directory>./routes</directory>
             <directory>./database</directory>
             <directory>./resources/views</directory>
