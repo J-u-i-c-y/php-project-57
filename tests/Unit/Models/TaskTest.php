@@ -53,7 +53,7 @@ class TaskTest extends TestCase
         /** @var Label $label */
         $label = Label::factory()->create();
         $task->labels()->attach($label->id);
-         $task->load('labels');
+        $task->load('labels');
         $this->assertTrue($task->labels->contains($label));
         $this->assertCount(1, $task->labels);
     }
