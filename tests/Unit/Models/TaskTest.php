@@ -19,7 +19,6 @@ class TaskTest extends TestCase
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        
         $this->assertInstanceOf(BelongsTo::class, $task->status());
         $this->assertInstanceOf(TaskStatus::class, $task->status);
     }
@@ -28,7 +27,6 @@ class TaskTest extends TestCase
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        
         $this->assertInstanceOf(BelongsTo::class, $task->createdBy());
         $this->assertInstanceOf(User::class, $task->createdBy);
     }
@@ -37,7 +35,6 @@ class TaskTest extends TestCase
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        
         $this->assertInstanceOf(BelongsTo::class, $task->assignedTo());
         $this->assertInstanceOf(User::class, $task->assignedTo);
     }
@@ -46,11 +43,10 @@ class TaskTest extends TestCase
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        
         $this->assertInstanceOf(BelongsToMany::class, $task->labels());
     }
 
-    public function testTaskCan_haveLabels(): void
+    public function testTaskCanHaveLabels(): void
     {
         /** @var Task $task */
         $task = Task::factory()->create();
@@ -58,7 +54,6 @@ class TaskTest extends TestCase
         $label = Label::factory()->create();
         
         $task->labels()->attach($label->id);
-        
         $this->assertTrue($task->labels->contains($label));
         $this->assertCount(1, $task->labels);
     }
@@ -66,7 +61,6 @@ class TaskTest extends TestCase
     public function testTaskFillableAttributes(): void
     {
         $task = new Task();
-        
         $expectedFillable = ['name', 'description', 'status_id', 'assigned_to_id', 'created_by_id'];
         $this->assertEquals($expectedFillable, $task->getFillable());
     }
@@ -74,7 +68,6 @@ class TaskTest extends TestCase
     public function testTaskTableName(): void
     {
         $task = new Task();
-        
         $this->assertEquals('tasks', $task->getTable());
     }
 }
