@@ -45,7 +45,11 @@ jobs:
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Composer Dependencies
-      run: composer install --prefer-dist --no-progress --no-interaction
+      run: |
+        # Удаляем старый vendor если есть
+        rm -rf vendor
+        # Устанавливаем с игнорированием требований PHP
+        composer install --prefer-dist --no-progress --no-interaction --ignore-platform-reqs
 
     - name: Install npm dependencies
       run: npm ci
