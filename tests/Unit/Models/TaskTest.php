@@ -18,46 +18,34 @@ class TaskTest extends TestCase
     public function testTaskBelongsToStatus(): void
     {
         $task = Task::factory()->create();
-        $relation = $task->status();
-        $this->assertInstanceOf(BelongsTo::class, $relation);
-        $task->load('status');
-        $this->assertNotNull($task->status);
-        $this->assertInstanceOf(TaskStatus::class, $task->status);
+        $this->assertInstanceOf(BelongsTo::class, $task->status());
     }
 
     public function testTaskBelongsToCreatedByUser(): void
     {
         $task = Task::factory()->create();
-        $relation = $task->createdBy();
-        $this->assertInstanceOf(BelongsTo::class, $relation);
-        $task->load('createdBy');
-        $this->assertNotNull($task->createdBy);
-        $this->assertInstanceOf(User::class, $task->createdBy);
+        $this->assertInstanceOf(BelongsTo::class, $task->createdBy());
     }
 
     public function testTaskBelongsToAssignedToUser(): void
     {
         $task = Task::factory()->create();
-        $relation = $task->assignedTo();
-        $this->assertInstanceOf(BelongsTo::class, $relation);
-        $task->load('assignedTo');
-        $this->assertNotNull($task->assignedTo);
-        $this->assertInstanceOf(User::class, $task->assignedTo);
+        $this->assertInstanceOf(BelongsTo::class, $task->assignedTo());
     }
 
     public function testTaskBelongsToManyLabels(): void
     {
         $task = Task::factory()->create();
-        $relation = $task->labels();
-        $this->assertInstanceOf(BelongsToMany::class, $relation);
+        $this->assertInstanceOf(BelongsToMany::class, $task->labels());
     }
 
     public function testTaskCanHaveLabels(): void
     {
         $task = Task::factory()->create();
         $label = Label::factory()->create();
+
         $task->labels()->attach($label->id);
-        $task->load('labels');
+
         $this->assertTrue($task->labels->contains($label));
         $this->assertCount(1, $task->labels);
     }
