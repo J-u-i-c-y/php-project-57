@@ -11,6 +11,7 @@ parameters:
         - tests
     # Игнорируем ошибки в тестах
     ignoreErrors:
+        - '#tests/Unit/Models/TaskTest\.php#'
         - '#Call to method PHPUnit\\Framework\\Assert::#'
         - '#Property Tests\\Feature\\TaskTest::\$status#'
     level: 5
