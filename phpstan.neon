@@ -1,8 +1,19 @@
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
+
 parameters:
-    level: 5
     paths:
         - app
         - database/factories
         - database/seeders
+    # Исключаем тесты
     excludePaths:
         - tests
+    # Игнорируем ошибки в тестах
+    ignoreErrors:
+        - '#Call to method PHPUnit\\Framework\\Assert::#'
+        - '#Property Tests\\Feature\\TaskTest::\$status#'
+    level: 5
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false

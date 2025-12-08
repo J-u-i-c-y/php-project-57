@@ -136,8 +136,6 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status_id' => 'required',
-            'assigned_to_id' => 'nullable',
             'status_id' => [
                 'required',
                 Rule::exists('task_statuses', 'id')

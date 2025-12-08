@@ -28,9 +28,10 @@ class TaskTest extends TestCase
         ]);
 
         /** @var TaskStatus $status */
-        $this->status = TaskStatus::factory()->create([
+        $status = TaskStatus::factory()->create([
             'name' => 'новый',
         ]);
+        $this->status = $status;
     }
 
     public function testIndex(): void
