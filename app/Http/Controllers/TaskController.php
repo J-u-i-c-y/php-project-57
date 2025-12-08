@@ -138,6 +138,14 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'status_id' => 'required',
             'assigned_to_id' => 'nullable',
+            'status_id' => [
+                'required',
+                Rule::exists('task_statuses', 'id')
+            ],
+            'assigned_to_id' => [
+                'nullable',
+                Rule::exists('users', 'id')
+            ],
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);

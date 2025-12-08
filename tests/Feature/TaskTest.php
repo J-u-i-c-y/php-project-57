@@ -13,7 +13,9 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
-    private TaskStatus $status;
+    
+    /** @var TaskStatus */
+    private $status;
 
     protected function setUp(): void
     {
@@ -25,6 +27,7 @@ class TaskTest extends TestCase
             'password' => bcrypt('password'),
         ]);
 
+        /** @var TaskStatus $status */
         $this->status = TaskStatus::factory()->create([
             'name' => 'новый',
         ]);
@@ -56,6 +59,7 @@ class TaskTest extends TestCase
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
             'created_by_id' => 1,
+            '_token' => csrf_token(),
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
@@ -78,9 +82,13 @@ class TaskTest extends TestCase
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
             'assigned_to_id' => (string) $this->user->id,
+            '_token' => csrf_token(),
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
+        
+        // dd($response->getSession()->get('errors'));
+        
         $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', [
@@ -93,6 +101,7 @@ class TaskTest extends TestCase
 
     public function testShow(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create([
             'status_id' => $this->status->id,
             'created_by_id' => $this->user->id,
@@ -105,7 +114,8 @@ class TaskTest extends TestCase
 
     public function testEditForGuest(): void
     {
-        $task = Task::create([
+        /** @var Task $task */
+        $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
@@ -121,7 +131,8 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
-        $task = Task::create([
+        /** @var Task $task */
+        $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
             'status_id' => $this->status->id,
@@ -135,7 +146,7 @@ class TaskTest extends TestCase
 
     public function testUpdateForGuest(): void
     {
-         /** @var \App\Models\Task $task */
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Original Task Name',
             'description' => 'Original Description',
@@ -148,6 +159,7 @@ class TaskTest extends TestCase
             'name' => 'Updated Task Name',
             'description' => 'Updated Description',
             'status_id' => (string) $this->status->id,
+            '_token' => csrf_token(),
         ];
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
@@ -169,6 +181,7 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -182,15 +195,17 @@ class TaskTest extends TestCase
             'description' => 'Updated Description',
             'status_id' => (string) $this->status->id,
             'assigned_to_id' => (string) $this->user->id,
+            '_token' => csrf_token(),
         ];
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
         $response->assertRedirect(route('tasks.index'));
-        $this->assertDatabaseHas('tasks', $updatedData);
+        $this->assertDatabaseHas('tasks', array_merge(['id' => $task->id], $updatedData));
     }
 
     public function testDestroyForGuest(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -199,7 +214,9 @@ class TaskTest extends TestCase
             'assigned_to_id' => $this->user->id,
         ]);
 
-        $response = $this->delete(route('tasks.destroy', $task));
+        $response = $this->delete(route('tasks.destroy', $task), [
+            '_token' => csrf_token(),
+        ]);
         $response->assertStatus(403);
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
     }
@@ -208,6 +225,7 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
 
+        /** @var Task $task */
         $task = Task::factory()->create([
             'name' => 'Test Task',
             'description' => 'Test Description',
@@ -216,7 +234,9 @@ class TaskTest extends TestCase
             'assigned_to_id' => $this->user->id,
         ]);
 
-        $response = $this->delete(route('tasks.destroy', $task));
+        $response = $this->delete(route('tasks.destroy', $task), [
+            '_token' => csrf_token(),
+        ]);
         $response->assertRedirect(route('tasks.index'));
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
     }
@@ -228,12 +248,14 @@ class TaskTest extends TestCase
         $response = $this->post(route('tasks.store'), [
             'description' => 'Test Description',
             'status_id' => (string) $this->status->id,
+            '_token' => csrf_token(),
         ]);
         $response->assertSessionHasErrors('name');
 
         $response = $this->post(route('tasks.store'), [
             'name' => 'Test Task',
             'description' => 'Test Description',
+            '_token' => csrf_token(),
         ]);
         $response->assertSessionHasErrors('status_id');
     }
