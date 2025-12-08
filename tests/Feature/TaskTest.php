@@ -200,7 +200,8 @@ class TaskTest extends TestCase
 
         $response = $this->put(route('tasks.update', $task), $updatedData);
         $response->assertRedirect(route('tasks.index'));
-        $this->assertDatabaseHas('tasks', array_merge(['id' => $task->id], $updatedData));
+        $databaseData = array_diff_key($updatedData, ['_token' => null]);
+        $this->assertDatabaseHas('tasks', array_merge(['id' => $task->id], $databaseData));
     }
 
     public function testDestroyForGuest(): void
