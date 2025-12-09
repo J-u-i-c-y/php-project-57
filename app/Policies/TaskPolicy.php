@@ -22,16 +22,16 @@ class TaskPolicy
 
     public function create(User $user): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function update(User $user, Task $task): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function delete(User $user, Task $task): bool
     {
-        return $user && $user->id === $task->created_by_id;
+        return $user->id === $task->created_by_id;
     }
 }

@@ -22,16 +22,16 @@ class LabelPolicy
 
     public function create(User $user): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function update(User $user, Label $label): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function delete(User $user, Label $label): bool
     {
-        return $user !== null && $label->tasks()->doesntExist();
+        return $label->tasks()->doesntExist();
     }
 }

@@ -4,9 +4,12 @@ namespace App\Policies;
 
 use App\Models\TaskStatus;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TaskStatusPolicy
 {
+    use HandlesAuthorization;
+
     public function viewAny(?User $user): bool
     {
         return true;
@@ -19,20 +22,16 @@ class TaskStatusPolicy
 
     public function create(User $user): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function update(User $user, TaskStatus $taskStatus): bool
     {
-        return $user !== null;
+        return true;
     }
 
-    public function delete(?User $user, TaskStatus $taskStatus): bool
+    public function delete(User $user, TaskStatus $taskStatus): bool
     {
-        if ($user === null) {
-            return false;
-        }
-
-        return true;
+        return $taskStatus->tasks()->doesntExist();
     }
 }
