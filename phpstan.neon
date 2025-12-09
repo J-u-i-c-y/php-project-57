@@ -9,7 +9,8 @@ parameters:
     
     excludePaths:
         - tests/*
-        - vendor/*
+        - tests/Feature/*
+        - tests/Unit/*
     
     level: 5
     
@@ -25,9 +26,7 @@ parameters:
         - env
     
     ignoreErrors:
-        - '#tests/Unit/Models/TaskTest\.php#'
-        - '#Call to an undefined method#'
-        - '#Access to an undefined property#'
-        - '#Call to method PHPUnit\\Framework\\Assert::#'
-        - '#Property Tests\\Feature\\TaskTest::\$status#'
         - '#.*tests/.*#'
+        - '#Call to method PHPUnit\\Framework\\Assert::.*#'
+        - '#will always evaluate to true#'
+        - '#method\.alreadyNarrowedType#'

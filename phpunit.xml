@@ -16,9 +16,9 @@
 
     <source>
         <include>
-            <directory suffix=".php">./app/Models</directory>
+            <directory suffix=".php">app</directory>
         </include>
-        <exclude>
+        <!-- <exclude>
             <directory>./app/Http/Middleware</directory>
             <directory>./app/Http/Controllers/Auth</directory>
             <directory>./app/Routes</directory>
@@ -31,7 +31,7 @@
             <directory>./app/Providers</directory>
             <directory>./app/Console</directory>
             <directory>./app/Exceptions</directory>
-        </exclude>
+        </exclude> -->
     </source>
 
     <coverage>
