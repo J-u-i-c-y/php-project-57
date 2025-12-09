@@ -23,8 +23,8 @@ class TaskTest extends TestCase
         $status = TaskStatus::factory()->create();
         $task->status()->associate($status);
         $task->save();
-        $this->assertInstanceOf(TaskStatus::class, $task->status);
         $this->assertEquals($status->id, $task->status_id);
+        $this->assertTrue($task->status->is($status));
     }
 
     public function testTaskBelongsToCreatedByUser(): void
@@ -33,8 +33,8 @@ class TaskTest extends TestCase
         $user = User::factory()->create();
         /** @var Task $task */
         $task = Task::factory()->create(['created_by_id' => $user->id]);
-        $this->assertInstanceOf(User::class, $task->createdBy);
         $this->assertEquals($user->id, $task->created_by_id);
+        $this->assertTrue($task->createdBy->is($user));
     }
 
     public function testTaskBelongsToAssignedToUser(): void
