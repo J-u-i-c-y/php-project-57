@@ -30,3 +30,6 @@ parameters:
         - '#Call to method PHPUnit\\Framework\\Assert::.*#'
         - '#will always evaluate to true#'
         - '#method\.alreadyNarrowedType#'
+        parameters:
+        - '#Call to method PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with.*will always evaluate to true#'
+        - '#method\.alreadyNarrowedType#'
