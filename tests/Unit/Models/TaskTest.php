@@ -17,31 +17,37 @@ class TaskTest extends TestCase
 
     public function testTaskBelongsToStatus(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create();
         $this->assertInstanceOf(BelongsTo::class, $task->status());
     }
 
     public function testTaskBelongsToCreatedByUser(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create();
         $this->assertInstanceOf(BelongsTo::class, $task->createdBy());
     }
 
     public function testTaskBelongsToAssignedToUser(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create();
         $this->assertInstanceOf(BelongsTo::class, $task->assignedTo());
     }
 
     public function testTaskBelongsToManyLabels(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create();
         $this->assertInstanceOf(BelongsToMany::class, $task->labels());
     }
 
     public function testTaskCanHaveLabels(): void
     {
+        /** @var Task $task */
         $task = Task::factory()->create();
+        /** @var Label $label */
         $label = Label::factory()->create();
         $task->labels()->attach($label->id);
         $this->assertTrue($task->labels->contains($label));
