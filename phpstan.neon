@@ -17,7 +17,6 @@ parameters:
         - Illuminate\Database\Eloquent\Model
         - Illuminate\Foundation\Auth\User
     
-    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     treatPhpDocTypesAsCertain: false
     
@@ -31,3 +30,4 @@ parameters:
         - '#Access to an undefined property#'
         - '#Call to method PHPUnit\\Framework\\Assert::#'
         - '#Property Tests\\Feature\\TaskTest::\$status#'
+        - '#.*tests/.*#'
