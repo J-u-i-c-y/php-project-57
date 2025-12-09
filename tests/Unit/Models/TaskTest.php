@@ -19,28 +19,43 @@ class TaskTest extends TestCase
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        $this->assertInstanceOf(BelongsTo::class, $task->status());
+        /** @var TaskStatus $status */
+        $status = TaskStatus::factory()->create();
+        $task->status()->associate($status);
+        $task->save();
+        $this->assertInstanceOf(TaskStatus::class, $task->status);
+        $this->assertEquals($status->id, $task->status_id);
     }
 
     public function testTaskBelongsToCreatedByUser(): void
     {
+        /** @var User $user */
+        $user = User::factory()->create();
         /** @var Task $task */
-        $task = Task::factory()->create();
-        $this->assertInstanceOf(BelongsTo::class, $task->createdBy());
+        $task = Task::factory()->create(['created_by_id' => $user->id]);
+        $this->assertInstanceOf(User::class, $task->createdBy);
+        $this->assertEquals($user->id, $task->created_by_id);
     }
 
     public function testTaskBelongsToAssignedToUser(): void
     {
+        /** @var User $user */
+        $user = User::factory()->create();
         /** @var Task $task */
-        $task = Task::factory()->create();
-        $this->assertInstanceOf(BelongsTo::class, $task->assignedTo());
+        $task = Task::factory()->create(['assigned_to_id' => $user->id]);
+        $this->assertInstanceOf(User::class, $task->assignedTo);
+        $this->assertEquals($user->id, $task->assigned_to_id);
     }
 
     public function testTaskBelongsToManyLabels(): void
     {
         /** @var Task $task */
         $task = Task::factory()->create();
-        $this->assertInstanceOf(BelongsToMany::class, $task->labels());
+        /** @var Label $label */
+        $label = Label::factory()->create();
+        $task->labels()->attach($label->id);
+        $this->assertInstanceOf(Label::class, $task->labels->first());
+        $this->assertEquals($label->id, $task->labels->first()->id);
     }
 
     public function testTaskCanHaveLabels(): void
