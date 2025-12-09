@@ -14,12 +14,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $status_id
  * @property int $created_by_id
  * @property int|null $assigned_to_id
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * 
  * @property-read \App\Models\TaskStatus $status
  * @property-read \App\Models\User $createdBy
  * @property-read \App\Models\User|null $assignedTo
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Label[] $labels
+ *
+ * @method BelongsTo status()
+ * @method BelongsTo createdBy()
+ * @method BelongsTo assignedTo()
+ * @method BelongsToMany labels()
  */
 
 class Task extends Model
@@ -54,8 +58,9 @@ class Task extends Model
         return $this->belongsToMany(Label::class, 'task_label');
     }
 
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
-    }
+    // public function createdBy(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'created_by_id');
+    // }
+    
 }
