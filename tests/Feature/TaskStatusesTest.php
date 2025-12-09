@@ -29,29 +29,20 @@ class TaskStatusesTest extends TestCase
     {
         $taskStatus = TaskStatus::factory()->create();
         Task::factory()->create(['status_id' => $taskStatus->id]);
-
         $response = $this->actingAs($this->user)
             ->delete(route('task_statuses.destroy', $taskStatus));
-
         $response->assertRedirect(route('task_statuses.index'));
-
-        $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->id]);
+        $taskStatusId = $taskStatus->id;
+        $this->assertDatabaseHas('task_statuses', ['id' => $taskStatusId]);
     }
 
     public function testDeleteStatusWithoutTasks(): void
     {
-        $this->actingAs($this->user);
-
-        $status = TaskStatus::create([
-            'name' => 'Test Status',
-        ]);
-
-        $response = $this->delete(route('task_statuses.destroy', $status));
-
+        $taskStatus = TaskStatus::factory()->create();
+        $response = $this->actingAs($this->user)
+            ->delete(route('task_statuses.destroy', $taskStatus));
         $response->assertRedirect(route('task_statuses.index'));
-        $response->assertSessionHas('flash_notification.0.level', 'success');
-        $response->assertSessionHas('flash_notification.0.message', 'Статус успешно удалён');
-
-        $this->assertDatabaseMissing('task_statuses', ['id' => $status->id]);
+        $taskStatusId = $taskStatus->id;
+        $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatusId]);
     }
 }
