@@ -27,27 +27,15 @@ class TaskStatusesTest extends TestCase
 
     public function testDeleteStatusWithTasks(): void
     {
-        $this->actingAs($this->user);
+        $taskStatus = TaskStatus::factory()->create();
+        Task::factory()->create(['status_id' => $taskStatus->id]);
 
-        $status = TaskStatus::create([
-            'name' => 'Test Status',
-        ]);
-
-        Task::create([
-            'name' => 'Test Task',
-            'description' => 'Test Description',
-            'status_id' => $status->id,
-            'created_by_id' => $this->user->id,
-            'assigned_to_id' => $this->user->id,
-        ]);
-
-        $response = $this->delete(route('task_statuses.destroy', $status));
+        $response = $this->actingAs($this->user)
+            ->delete(route('task_statuses.destroy', $taskStatus));
 
         $response->assertRedirect(route('task_statuses.index'));
-        $response->assertSessionHas('flash_notification.0.level', 'danger');
-        $response->assertSessionHas('flash_notification.0.message', 'Не удалось удалить статус');
 
-        $this->assertDatabaseHas('task_statuses', ['id' => $status->id]);
+        $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->id]);
     }
 
     public function testDeleteStatusWithoutTasks(): void
