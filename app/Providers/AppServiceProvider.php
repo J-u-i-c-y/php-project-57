@@ -2,34 +2,38 @@
 
 namespace App\Providers;
 
+use App\Models\Label;
+use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Policies\LabelPolicy;
+use App\Policies\TaskPolicy;
 use App\Policies\TaskStatusPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
-class AppServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * The model to policy mappings for the application.
+     *
+     * @var array<class-string, class-string>
      */
-    public function register(): void
-    {
-        //
-    }
+    protected $policies = [
+        TaskStatus::class => TaskStatusPolicy::class,
+        Task::class => TaskPolicy::class,
+        Label::class => LabelPolicy::class,
+    ];
 
     /**
-     * Bootstrap any application services.
+     * Register any authentication / authorization services.
      */
     public function boot(): void
     {
+        $this->registerPolicies();
         app()->setLocale('ru');
 
         if (config('app.env') != 'local') {
             URL::forceScheme('https');
         }
     }
-
-    protected $policies = [
-        TaskStatus::class => TaskStatusPolicy::class,
-    ];
 }

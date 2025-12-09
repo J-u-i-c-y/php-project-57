@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     public function index()
     {
         $taskStatuses = TaskStatus::paginate();
@@ -66,22 +71,30 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
     }
 
+    // public function destroy(TaskStatus $taskStatus)
+    // {
+    //     if (Auth::guest()) {
+    //         return abort(403);
+    //     }
+
+    //     if ($taskStatus->tasks()->exists()) {
+    //         flash(__('layout.delete_error'))->error();
+
+    //         return redirect()->route('task_statuses.index');
+    //     }
+
+    //     $taskStatus->delete();
+
+    //     flash(__('controllers.task_statuses_destroy'))->success();
+
+    //     return redirect()->route('task_statuses.index');
+    // }
+
     public function destroy(TaskStatus $taskStatus)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-
-        if ($taskStatus->tasks()->exists()) {
-            flash(__('layout.delete_error'))->error();
-
-            return redirect()->route('task_statuses.index');
-        }
-
         $taskStatus->delete();
-
-        flash(__('controllers.task_statuses_destroy'))->success();
-
+        flash(__('controllers.tasks_status_destroy'))->success();
+        
         return redirect()->route('task_statuses.index');
     }
 }

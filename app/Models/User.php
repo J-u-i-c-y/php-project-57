@@ -56,4 +56,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function guest(): bool
+    {
+        return !$this->exists;
+    }
 }

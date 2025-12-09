@@ -8,13 +8,17 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class);
+    }
+
     public function index(Request $request)
     {
         $data = $request->validate([
@@ -22,12 +26,12 @@ class TaskController extends Controller
         ]);
 
         $filterTasks = QueryBuilder::for(Task::class)
-        ->allowedFilters([
-            AllowedFilter::exact('status_id'),
-            AllowedFilter::exact('created_by_id'),
-            AllowedFilter::exact('assigned_to_id'),
-        ])
-        ->with(['status', 'createdBy', 'assignedTo']);
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->with(['status', 'createdBy', 'assignedTo']);
 
         $tasks = $filterTasks->paginate();
         $taskStatuses = TaskStatus::all();
@@ -42,14 +46,8 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
         $taskStatuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
@@ -59,16 +57,6 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        if (Auth::guest()) {
-            abort(403);
-        }
-
-        Log::info('Store method called', [
-            'authenticated' => Auth::check(),
-            'user_id' => Auth::id(),
-            'request_data' => $request->all(),
-        ]);
-
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -116,10 +104,6 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-
         $taskStatuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
@@ -129,10 +113,6 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -147,14 +127,6 @@ class TaskController extends Controller
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);
-
-        if (! TaskStatus::where('id', $data['status_id'])->exists()) {
-            return redirect()->back()->withErrors(['status_id' => 'The selected status is invalid.']);
-        }
-
-        if (isset($data['assigned_to_id']) && ! User::where('id', $data['assigned_to_id'])->exists()) {
-            return redirect()->back()->withErrors(['assigned_to_id' => 'The selected user is invalid.']);
-        }
 
         $data['status_id'] = (int) $data['status_id'];
         if (isset($data['assigned_to_id'])) {
@@ -176,16 +148,9 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-        if (Auth::id() === $task->created_by_id) {
-            $task->labels()->detach();
-            $task->delete();
-            flash(__('controllers.tasks_destroy'))->success();
-        } else {
-            flash(__('controllers.tasks_destroy_failed'))->error();
-        }
+        $task->labels()->detach();
+        $task->delete();
+        flash(__('controllers.tasks_destroy'))->success();
 
         return redirect()->route('tasks.index');
     }
