@@ -32,7 +32,7 @@ class TaskStatusPolicy
         if ($user === null) {
             return false;
         }
-        
+
         return true;
     }
 }
