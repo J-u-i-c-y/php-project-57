@@ -33,6 +33,6 @@ class TaskStatusPolicy
             return false;
         }
         
-        return $taskStatus->tasks()->doesntExist();
+        return true;
     }
 }
