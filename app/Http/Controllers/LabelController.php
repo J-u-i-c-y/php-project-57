@@ -32,26 +32,26 @@ class LabelController extends Controller
 
     public function store(Request $request)
     {
-        // $data = $request->validate([
-        //     'name' => 'required|unique:labels',
-        //     'description' => 'max:1000',
-        // ], [
-        //     'name.unique' => __('controllers.unique_error_label'),
-        // ]);
+        $data = $request->validate([
+            'name' => 'required|unique:labels',
+            'description' => 'max:1000',
+        ], [
+            'name.unique' => __('controllers.unique_error_label'),
+        ]);
 
-        // $label = new Label();
-        // $label->fill($data);
-        // $label->save();
-        // flash(__('controllers.label_create'))->success();
+        $label = new Label();
+        $label->fill($data);
+        $label->save();
+        flash(__('controllers.label_create'))->success();
 
-        // return redirect()->route('labels.index');
-
-        $validated = $request->validated();
-    
-        Label::create($validated);
-        flash(__('controllers.labels_create'))->success();
-        
         return redirect()->route('labels.index');
+
+        // $validated = $request->validated();
+    
+        // Label::create($validated);
+        // flash(__('controllers.labels_create'))->success();
+        
+        // return redirect()->route('labels.index');
     }
 
     public function edit(Label $label)
@@ -65,23 +65,23 @@ class LabelController extends Controller
 
     public function update(Request $request, Label $label)
     {
-        // $data = $request->validate([
-        //     'name' => "required|unique:labels,name,{$label->id}",
-        //     'description' => 'max:1000',
-        // ]);
-        // $label->fill($data);
-        // $label->save();
+        $data = $request->validate([
+            'name' => "required|unique:labels,name,{$label->id}",
+            'description' => 'max:1000',
+        ]);
+        $label->fill($data);
+        $label->save();
 
-        // flash(__('controllers.label_update'))->success();
+        flash(__('controllers.label_update'))->success();
 
-        // return redirect()->route('labels.index');
-
-        $validated = $request->validated();
-    
-        $label->update($validated);
-        flash(__('controllers.labels_update'))->success();
-        
         return redirect()->route('labels.index');
+
+        // $validated = $request->validated();
+    
+        // $label->update($validated);
+        // flash(__('controllers.labels_update'))->success();
+        
+        // return redirect()->route('labels.index');
     }
 
     public function destroy(Label $label)

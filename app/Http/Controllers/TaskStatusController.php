@@ -37,25 +37,25 @@ class TaskStatusController extends Controller
 
     public function store(TaskStatusRequest $request)
     {
-        // $data = $request->validate([
-        //     'name' => 'required|unique:task_statuses',
-        // ], [
-        //     'name.unique' => __('controllers.unique_error_status'),
-        // ]);
+        $data = $request->validate([
+            'name' => 'required|unique:task_statuses',
+        ], [
+            'name.unique' => __('controllers.unique_error_status'),
+        ]);
 
-        // $taskStatus = new TaskStatus();
-        // $taskStatus->fill($data);
-        // $taskStatus->save();
-        // flash(__('controllers.task_statuses_create'))->success();
-
-        // return redirect()->route('task_statuses.index');
-
-        $validated = $request->validated();
-    
-        TaskStatus::create($validated);
+        $taskStatus = new TaskStatus();
+        $taskStatus->fill($data);
+        $taskStatus->save();
         flash(__('controllers.task_statuses_create'))->success();
-        
+
         return redirect()->route('task_statuses.index');
+
+        // $validated = $request->validated();
+    
+        // TaskStatus::create($validated);
+        // flash(__('controllers.task_statuses_create'))->success();
+        
+        // return redirect()->route('task_statuses.index');
     }
 
     public function edit(TaskStatus $taskStatus)
@@ -69,55 +69,55 @@ class TaskStatusController extends Controller
 
     public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
-        // $data = $request->validate([
-        //     'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
-        // ]);
-        // $taskStatus->fill($data);
-        // $taskStatus->save();
-        // flash(__('controllers.task_statuses_update'))->success();
-
-        // return redirect()->route('task_statuses.index');
-
-        $validated = $request->validated();
-        
-        $taskStatus->update($validated);
+        $data = $request->validate([
+            'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
+        ]);
+        $taskStatus->fill($data);
+        $taskStatus->save();
         flash(__('controllers.task_statuses_update'))->success();
+
+        return redirect()->route('task_statuses.index');
+
+        // $validated = $request->validated();
         
+        // $taskStatus->update($validated);
+        // flash(__('controllers.task_statuses_update'))->success();
+        
+        // return redirect()->route('task_statuses.index');
+    }
+
+    public function destroy(TaskStatus $taskStatus)
+    {
+        if (Auth::guest()) {
+            return abort(403);
+        }
+
+        if ($taskStatus->tasks()->exists()) {
+            flash(__('layout.delete_error'))->error();
+
+            return redirect()->route('task_statuses.index');
+        }
+
+        $taskStatus->delete();
+
+        flash(__('controllers.task_statuses_destroy'))->success();
+
         return redirect()->route('task_statuses.index');
     }
 
     // public function destroy(TaskStatus $taskStatus)
     // {
-    //     if (Auth::guest()) {
-    //         return abort(403);
-    //     }
+    //     $this->authorize('delete', $taskStatus);
 
     //     if ($taskStatus->tasks()->exists()) {
-    //         flash(__('layout.delete_error'))->error();
-
+    //         flash(__('controllers.task_statuses_destroy_failed'))->error();
+    //         // flash('Не удалось удалить статус')->error();
     //         return redirect()->route('task_statuses.index');
     //     }
 
     //     $taskStatus->delete();
-
     //     flash(__('controllers.task_statuses_destroy'))->success();
 
     //     return redirect()->route('task_statuses.index');
     // }
-
-    public function destroy(TaskStatus $taskStatus)
-    {
-        $this->authorize('delete', $taskStatus);
-
-        if ($taskStatus->tasks()->exists()) {
-            flash(__('controllers.task_statuses_destroy_failed'))->error();
-            // flash('Не удалось удалить статус')->error();
-            return redirect()->route('task_statuses.index');
-        }
-
-        $taskStatus->delete();
-        flash(__('controllers.task_statuses_destroy'))->success();
-
-        return redirect()->route('task_statuses.index');
-    }
 }
