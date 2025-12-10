@@ -36,11 +36,11 @@ class Task extends Model
         'created_by_id',
     ];
 
-    protected $casts = [
-        'status_id' => 'integer',
-        'assigned_to_id' => 'integer',
-        'created_by_id' => 'integer',
-    ];
+    // protected $casts = [
+    //     'status_id' => 'integer',
+    //     'assigned_to_id' => 'integer',
+    //     'created_by_id' => 'integer',
+    // ];
 
     public function creator()
     {
