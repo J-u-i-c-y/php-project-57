@@ -120,7 +120,7 @@ class TaskController extends Controller
                 Rule::exists('users', 'id')
             ],
             'labels' => 'nullable|array',
-            'labels.*' => 'exists:labels,id',
+            'labels.*' => 'exists:labels,id'
         ]);
 
         $data['status_id'] = (int) $data['status_id'];
