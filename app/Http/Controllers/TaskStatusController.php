@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\TaskStatusRequest;
+// use App\Http\Requests\TaskStatusRequest;
 
 class TaskStatusController extends Controller
 {
@@ -35,7 +35,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.create');
     }
 
-    public function store(TaskStatusRequest $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|unique:task_statuses',
@@ -67,7 +67,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.edit', compact('taskStatus'));
     }
 
-    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
+    public function update(Request $request, TaskStatus $taskStatus)
     {
         $data = $request->validate([
             'name' => "required|unique:task_statuses,name,{$taskStatus->id}",

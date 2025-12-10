@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 // use App\Http\Requests\LabelRequest;
 
 class LabelController extends Controller
