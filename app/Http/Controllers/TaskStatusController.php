@@ -35,7 +35,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.create');
     }
 
-    public function store(Request $request)
+    public function store(TaskStatusRequest $request)
     {
         // $data = $request->validate([
         //     'name' => 'required|unique:task_statuses',
@@ -67,7 +67,7 @@ class TaskStatusController extends Controller
         return view('task_statuses.edit', compact('taskStatus'));
     }
 
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
         // $data = $request->validate([
         //     'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
