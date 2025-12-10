@@ -15,8 +15,9 @@ use Illuminate\Notifications\Notifiable;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task[] $createdTasks
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task[] $assignedTasks
  */
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -60,5 +61,25 @@ class User extends Authenticatable
     public function guest(): bool
     {
         return !$this->exists;
+    }
+
+    /**
+     * Задачи, созданные пользователем.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdTasks()
+    {
+        return $this->hasMany(Task::class, 'created_by_id');
+    }
+
+    /**
+     * Задачи, назначенные пользователю.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assignedTasks()
+    {
+        return $this->hasMany(Task::class, 'assigned_to_id');
     }
 }

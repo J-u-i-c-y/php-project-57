@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TaskStatusRequest;
 
 class TaskStatusController extends Controller
 {
@@ -36,17 +37,24 @@ class TaskStatusController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:task_statuses',
-        ], [
-            'name.unique' => __('controllers.unique_error_status'),
-        ]);
+        // $data = $request->validate([
+        //     'name' => 'required|unique:task_statuses',
+        // ], [
+        //     'name.unique' => __('controllers.unique_error_status'),
+        // ]);
 
-        $taskStatus = new TaskStatus();
-        $taskStatus->fill($data);
-        $taskStatus->save();
+        // $taskStatus = new TaskStatus();
+        // $taskStatus->fill($data);
+        // $taskStatus->save();
+        // flash(__('controllers.task_statuses_create'))->success();
+
+        // return redirect()->route('task_statuses.index');
+
+        $validated = $request->validated();
+    
+        TaskStatus::create($validated);
         flash(__('controllers.task_statuses_create'))->success();
-
+        
         return redirect()->route('task_statuses.index');
     }
 
@@ -61,13 +69,20 @@ class TaskStatusController extends Controller
 
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $data = $request->validate([
-            'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
-        ]);
-        $taskStatus->fill($data);
-        $taskStatus->save();
-        flash(__('controllers.task_statuses_update'))->success();
+        // $data = $request->validate([
+        //     'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
+        // ]);
+        // $taskStatus->fill($data);
+        // $taskStatus->save();
+        // flash(__('controllers.task_statuses_update'))->success();
 
+        // return redirect()->route('task_statuses.index');
+
+        $validated = $request->validated();
+        
+        $taskStatus->update($validated);
+        flash(__('controllers.task_statuses_update'))->success();
+        
         return redirect()->route('task_statuses.index');
     }
 
