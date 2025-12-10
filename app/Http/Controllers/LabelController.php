@@ -47,10 +47,10 @@ class LabelController extends Controller
         return redirect()->route('labels.index');
 
         // $validated = $request->validated();
-    
+
         // Label::create($validated);
         // flash(__('controllers.labels_create'))->success();
-        
+
         // return redirect()->route('labels.index');
     }
 
@@ -77,10 +77,10 @@ class LabelController extends Controller
         return redirect()->route('labels.index');
 
         // $validated = $request->validated();
-    
+
         // $label->update($validated);
         // flash(__('controllers.labels_update'))->success();
-        
+
         // return redirect()->route('labels.index');
     }
 

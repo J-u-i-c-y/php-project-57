@@ -51,10 +51,10 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
 
         // $validated = $request->validated();
-    
+
         // TaskStatus::create($validated);
         // flash(__('controllers.task_statuses_create'))->success();
-        
+
         // return redirect()->route('task_statuses.index');
     }
 
@@ -79,10 +79,10 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
 
         // $validated = $request->validated();
-        
+
         // $taskStatus->update($validated);
         // flash(__('controllers.task_statuses_update'))->success();
-        
+
         // return redirect()->route('task_statuses.index');
     }
 
