@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     /**
      * Задачи, созданные пользователем.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function createdTasks()
@@ -75,7 +75,7 @@ class User extends Authenticatable
 
     /**
      * Задачи, назначенные пользователю.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function assignedTasks()
