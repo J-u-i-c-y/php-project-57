@@ -30,8 +30,11 @@ class TaskPolicy
         return true;
     }
 
+    /**
+     * Determine whether the user can delete the task.
+     */
     public function delete(User $user, Task $task): bool
     {
-        return $user->id === $task->created_by_id;
+        return $task->createdBy->is($user);
     }
 }
