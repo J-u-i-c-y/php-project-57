@@ -6,8 +6,6 @@ use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-// use App\Http\Requests\LabelRequest;
-
 class LabelController extends Controller
 {
     public function index()
@@ -46,13 +44,6 @@ class LabelController extends Controller
         flash(__('controllers.label_create'))->success();
 
         return redirect()->route('labels.index');
-
-        // $validated = $request->validated();
-
-        // Label::create($validated);
-        // flash(__('controllers.labels_create'))->success();
-
-        // return redirect()->route('labels.index');
     }
 
     public function edit(Label $label)
@@ -76,13 +67,6 @@ class LabelController extends Controller
         flash(__('controllers.label_update'))->success();
 
         return redirect()->route('labels.index');
-
-        // $validated = $request->validated();
-
-        // $label->update($validated);
-        // flash(__('controllers.labels_update'))->success();
-
-        // return redirect()->route('labels.index');
     }
 
     public function destroy(Label $label)

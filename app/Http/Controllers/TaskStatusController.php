@@ -49,13 +49,6 @@ class TaskStatusController extends Controller
         flash(__('controllers.task_statuses_create'))->success();
 
         return redirect()->route('task_statuses.index');
-
-        // $validated = $request->validated();
-
-        // TaskStatus::create($validated);
-        // flash(__('controllers.task_statuses_create'))->success();
-
-        // return redirect()->route('task_statuses.index');
     }
 
     public function edit(TaskStatus $taskStatus)
@@ -76,13 +69,6 @@ class TaskStatusController extends Controller
         flash(__('controllers.task_statuses_update'))->success();
 
         return redirect()->route('task_statuses.index');
-
-        // $validated = $request->validated();
-
-        // $taskStatus->update($validated);
-        // flash(__('controllers.task_statuses_update'))->success();
-
-        // return redirect()->route('task_statuses.index');
     }
 
     public function destroy(TaskStatus $taskStatus)
@@ -101,20 +87,4 @@ class TaskStatusController extends Controller
 
         return redirect()->route('task_statuses.index');
     }
-
-    // public function destroy(TaskStatus $taskStatus)
-    // {
-    //     $this->authorize('delete', $taskStatus);
-
-    //     if ($taskStatus->tasks()->exists()) {
-    //         flash(__('controllers.task_statuses_destroy_failed'))->error();
-    //         // flash('Не удалось удалить статус')->error();
-    //         return redirect()->route('task_statuses.index');
-    //     }
-
-    //     $taskStatus->delete();
-    //     flash(__('controllers.task_statuses_destroy'))->success();
-
-    //     return redirect()->route('task_statuses.index');
-    // }
 }

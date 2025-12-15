@@ -73,9 +73,9 @@ class TaskController extends Controller
             'created_by_id' => Auth::id(),
         ]);
 
-        if (isset($data['labels'])) {
-            $task->labels()->attach($data['labels']);
-        }
+        $task->labels()->attach(
+            collect($data['labels'] ?? [])->filter()->values()->all()
+        );
 
         flash(__('controllers.tasks_create'))->success();
         return redirect()->route('tasks.index');
