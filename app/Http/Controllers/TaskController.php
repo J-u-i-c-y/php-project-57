@@ -20,33 +20,6 @@ class TaskController extends Controller
         $this->authorizeResource(Task::class);
     }
 
-    // public function index(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'filter' => 'nullable|array',
-    //     ]);
-
-    //     $filterTasks = QueryBuilder::for(Task::class)
-    //         ->allowedFilters([
-    //             AllowedFilter::exact('status_id'),
-    //             AllowedFilter::exact('created_by_id'),
-    //             AllowedFilter::exact('assigned_to_id'),
-    //         ])
-    //         ->with(['status', 'createdBy', 'assignedTo']);
-
-    //     $tasks = $filterTasks->paginate();
-    //     $taskStatuses = TaskStatus::all();
-    //     $users = User::all();
-
-    //     $filter = [
-    //         'status_id' => $request->input('filter.status_id'),
-    //         'created_by_id' => $request->input('filter.created_by_id'),
-    //         'assigned_to_id' => $request->input('filter.assigned_to_id'),
-    //     ];
-
-    //     return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
-    // }
-
     public function index(Request $request)
     {
         $request->validate([
@@ -168,17 +141,12 @@ class TaskController extends Controller
         ]);
 
         $data['status_id'] = (int) $data['status_id'];
-        if (isset($data['assigned_to_id'])) {
-            $data['assigned_to_id'] = (int) $data['assigned_to_id'];
-        }
+        $data['assigned_to_id'] = $request->filled('assigned_to_id') ? (int) $data['assigned_to_id'] : null;
 
         $task->update($data);
 
-        if (isset($data['labels'])) {
-            $task->labels()->sync($data['labels']);
-        } else {
-            $task->labels()->detach();
-        }
+        $labels = collect($data['labels'] ?? [])->filter()->values()->all();
+        $task->labels()->sync($labels);
 
         flash(__('controllers.tasks_update'))->success();
 
