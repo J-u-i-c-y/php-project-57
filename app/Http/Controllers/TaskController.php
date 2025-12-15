@@ -20,9 +20,36 @@ class TaskController extends Controller
         $this->authorizeResource(Task::class);
     }
 
+    // public function index(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'filter' => 'nullable|array',
+    //     ]);
+
+    //     $filterTasks = QueryBuilder::for(Task::class)
+    //         ->allowedFilters([
+    //             AllowedFilter::exact('status_id'),
+    //             AllowedFilter::exact('created_by_id'),
+    //             AllowedFilter::exact('assigned_to_id'),
+    //         ])
+    //         ->with(['status', 'createdBy', 'assignedTo']);
+
+    //     $tasks = $filterTasks->paginate();
+    //     $taskStatuses = TaskStatus::all();
+    //     $users = User::all();
+
+    //     $filter = [
+    //         'status_id' => $request->input('filter.status_id'),
+    //         'created_by_id' => $request->input('filter.created_by_id'),
+    //         'assigned_to_id' => $request->input('filter.assigned_to_id'),
+    //     ];
+
+    //     return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
+    // }
+
     public function index(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'filter' => 'nullable|array',
         ]);
 
@@ -35,14 +62,10 @@ class TaskController extends Controller
             ->with(['status', 'createdBy', 'assignedTo']);
 
         $tasks = $filterTasks->paginate();
-        $taskStatuses = TaskStatus::all();
-        $users = User::all();
+        $taskStatuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
 
-        $filter = [
-            'status_id' => $request->input('filter.status_id'),
-            'created_by_id' => $request->input('filter.created_by_id'),
-            'assigned_to_id' => $request->input('filter.assigned_to_id'),
-        ];
+        $filter = $request->input('filter', []);
 
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }

@@ -10,23 +10,28 @@
                     <div class="flex">
                         <select class="rounded border-gray-300" name="filter[status_id]" id="filter[status_id]">
                             <option value selected="selected">{{ __('layout.table_task_status') }}</option>
-                            @foreach ($taskStatuses->all() as $status)
-                                <option value="{{ $status->id }}" {{ $status->id == $filter['status_id'] ? 'selected' : '' }}>{{ $status->name }}</option>
+                            @foreach ($taskStatuses as $id => $name)
+                                <option value="{{ $id }}" {{ $id == ($filter['status_id'] ?? null) ? 'selected' : '' }}>
+                                    {{ $name }}
+                                </option>
                             @endforeach
                         </select>
 
-
-                        <select class="rounded border-gray-300" name="filter[created_by_id]" id="filter[created_by_id]">
+                        <select class="rounded border-gray-300" name="filter[created_by_id]">
                             <option value selected="selected">{{ __('layout.table_creater') }}</option>
-                            @foreach ($users->all() as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == $filter['created_by_id'] ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @foreach ($users as $id => $name)
+                                <option value="{{ $id }}" {{ $id == ($filter['created_by_id'] ?? null) ? 'selected' : '' }}>
+                                    {{ $name }}
+                                </option>
                             @endforeach
                         </select>
 
-                        <select class="rounded border-gray-300" name="filter[assigned_to_id]" id="filter[assigned_to_id]">
+                        <select class="rounded border-gray-300" name="filter[assigned_to_id]">
                             <option value selected="selected">{{ __('layout.table_assigned') }}</option>
-                            @foreach ($users->all() as $user)
-                                <option value="{{ $user->id }}" {{ $user->id == $filter['assigned_to_id'] ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @foreach ($users as $id => $name)
+                                <option value="{{ $id }}" {{ $id == ($filter['assigned_to_id'] ?? null) ? 'selected' : '' }}>
+                                    {{ $name }}
+                                </option>
                             @endforeach
                         </select>
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" type="submit">{{ __('layout.create_apply') }}</button>
