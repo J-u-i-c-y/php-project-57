@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Requests\TaskRequest;
 use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -54,29 +52,11 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        // $validated = $request->validated();
-        // /** @var \App\Models\User $user */
-        // $user = Auth::user();
-        // $task = $user->createdTasks()->create($validated);
-
-        // if (!empty($validated['labels'])) {
-        //     $task->labels()->attach(array_filter($validated['labels']));
-        // }
-
-        // flash(__('controllers.tasks_create'))->success();
-
-        // return redirect()->route('tasks.index');
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status_id' => [
-                'required',
-                Rule::exists('task_statuses', 'id')
-            ],
-            'assigned_to_id' => [
-                'nullable',
-                Rule::exists('users', 'id')
-            ],
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ], [
@@ -85,33 +65,25 @@ class TaskController extends Controller
             'assigned_to_id.exists' => 'The selected user is invalid.',
         ]);
 
-        $data['status_id'] = (int) $data['status_id'];
-
-        if (isset($data['assigned_to_id'])) {
-            $data['assigned_to_id'] = (int) $data['assigned_to_id'];
-        }
-
-        $task = new Task();
-        $task->fill($data);
-        $task->created_by_id = Auth::id();
-        $task->save();
+        $task = Task::create([
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+            'status_id' => (int) $data['status_id'],
+            'assigned_to_id' => isset($data['assigned_to_id']) ? (int) $data['assigned_to_id'] : null,
+            'created_by_id' => Auth::id(),
+        ]);
 
         if (isset($data['labels'])) {
             $task->labels()->attach($data['labels']);
         }
 
         flash(__('controllers.tasks_create'))->success();
-
         return redirect()->route('tasks.index');
     }
 
     public function show(Task $task)
     {
-        $taskStatus = TaskStatus::findOrFail($task->status_id)->name;
-        return view('tasks.show', compact('task', 'taskStatus'));
-
-        // $task->load('status', 'createdBy', 'assignedTo', 'labels');
-        // return view('tasks.show', compact('task'));
+        return view('tasks.show', compact('task'));
     }
 
     public function edit(Task $task)
@@ -128,28 +100,23 @@ class TaskController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status_id' => [
-                'required',
-                Rule::exists('task_statuses', 'id')
-            ],
-            'assigned_to_id' => [
-                'nullable',
-                Rule::exists('users', 'id')
-            ],
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable|array',
             'labels.*' => 'exists:labels,id',
         ]);
 
-        $data['status_id'] = (int) $data['status_id'];
-        $data['assigned_to_id'] = $request->filled('assigned_to_id') ? (int) $data['assigned_to_id'] : null;
-
-        $task->update($data);
+        $task->update([
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+            'status_id' => (int) $data['status_id'],
+            'assigned_to_id' => $request->filled('assigned_to_id') ? (int) $data['assigned_to_id'] : null,
+        ]);
 
         $labels = collect($data['labels'] ?? [])->filter()->values()->all();
         $task->labels()->sync($labels);
 
         flash(__('controllers.tasks_update'))->success();
-
         return redirect()->route('tasks.index');
     }
 

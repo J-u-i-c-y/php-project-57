@@ -4,7 +4,7 @@
             <h2 class="mb-5">{{ __('layout.view_task') }}: {{ $task->name }}<a href="{{ route('tasks.edit', $task->id)}}">&#9881;</a>
             </h2>
                 <p><span class="font-black">{{ __('layout.table_name') }}:</span> {{ $task->name }}</p>
-                <p><span class="font-black">{{ __('layout.table_task_status') }}:</span> {{ $taskStatus }}</p>
+                <p><span class="font-black">{{ __('layout.table_task_status') }}:</span> {{ $task->status->name }}</p>
                 <p><span class="font-black">{{ __('layout.table_description') }}:</span>{{ $task->description }}</p>
                 <p><span class="font-black">{{ __('layout.labels') }}:</span></p>
             <div>
