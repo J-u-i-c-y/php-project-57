@@ -29,15 +29,14 @@ class TaskStatusController extends Controller
 
     public function create()
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-
+        $this->authorize('create', TaskStatus::class);
         return view('task_statuses.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', TaskStatus::class);
+
         $data = $request->validate([
             'name' => 'required|unique:task_statuses',
         ], [
@@ -61,15 +60,14 @@ class TaskStatusController extends Controller
 
     public function edit(TaskStatus $taskStatus)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
-
+        $this->authorize('update', $taskStatus);
         return view('task_statuses.edit', compact('taskStatus'));
     }
 
     public function update(Request $request, TaskStatus $taskStatus)
     {
+        $this->authorize('update', $taskStatus);
+
         $data = $request->validate([
             'name' => "required|unique:task_statuses,name,{$taskStatus->id}",
         ]);
@@ -89,9 +87,7 @@ class TaskStatusController extends Controller
 
     public function destroy(TaskStatus $taskStatus)
     {
-        if (Auth::guest()) {
-            return abort(403);
-        }
+        $this->authorize('delete', $taskStatus);
 
         if ($taskStatus->tasks()->exists()) {
             flash(__('layout.delete_error'))->error();

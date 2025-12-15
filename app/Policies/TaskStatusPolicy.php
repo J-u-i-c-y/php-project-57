@@ -22,16 +22,26 @@ class TaskStatusPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function update(User $user, TaskStatus $taskStatus): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
-        return true;
+        return $user !== null && !$taskStatus->tasks()->exists();
+    }
+
+    public function restore(User $user, TaskStatus $taskStatus): bool
+    {
+        return false;
+    }
+
+    public function forceDelete(User $user, TaskStatus $taskStatus): bool
+    {
+        return false;
     }
 }
