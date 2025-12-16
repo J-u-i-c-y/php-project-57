@@ -22,7 +22,7 @@ class LabelPolicy
 
     public function create(User $user): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function update(User $user, Label $label): bool
@@ -32,6 +32,6 @@ class LabelPolicy
 
     public function delete(User $user, Label $label): bool
     {
-        return $user !== null && !$label->tasks()->exists();
+        return !$label->tasks()->exists();
     }
 }

@@ -33,10 +33,6 @@ class TaskStatusPolicy
 
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
-        if (!$user) {
-            return false;
-        }
-
         if ($taskStatus->tasks()->exists()) {
             throw new AuthorizationException(__('layout.delete_error'));
         }
