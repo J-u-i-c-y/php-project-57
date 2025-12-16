@@ -36,11 +36,11 @@ class TaskStatusPolicy
         if (!$user) {
             return false;
         }
-        
+
         if ($taskStatus->tasks()->exists()) {
             throw new AuthorizationException(__('layout.delete_error'));
         }
-        
+
         return true;
     }
 }
