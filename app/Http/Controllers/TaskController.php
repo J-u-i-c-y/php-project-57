@@ -55,7 +55,7 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         $data = $request->validated();
-        
+
         $task = Task::create([
             'name' => $data['name'],
             'description' => $data['description'] ?? null,
@@ -89,7 +89,7 @@ class TaskController extends Controller
     public function update(TaskUpdateRequest $request, Task $task)
     {
         $data = $request->validated();
-        
+
         $task->update([
             'name' => $data['name'],
             'description' => $data['description'] ?? null,
