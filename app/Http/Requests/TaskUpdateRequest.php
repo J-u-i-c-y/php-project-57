@@ -4,21 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskRequest extends FormRequest
+class TaskUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true; // Авторизация уже проверена в контроллере/политиках
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -31,21 +23,6 @@ class TaskRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => __('controllers.unique_error_task'),
-            'status_id.exists' => 'The selected status is invalid.',
-            'assigned_to_id.exists' => 'The selected user is invalid.',
-        ];
-    }
-
-    /**
-     * Prepare the data for validation.
-     */
     protected function prepareForValidation(): void
     {
         if ($this->has('assigned_to_id') && $this->input('assigned_to_id') === '') {
