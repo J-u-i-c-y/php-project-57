@@ -34,4 +34,16 @@ class LabelPolicy
     {
         return $label->tasks()->doesntExist();
     }
+
+    public function destroy(Label $label)
+    {
+        if ($label->tasks()->exists()) {
+            flash(__('controllers.label_statuses_destroy_failed'))->error();
+            return redirect()->route('labels.index');
+        }
+
+        $label->delete();
+        flash(__('controllers.label_destroy'))->success();
+        return redirect()->route('labels.index');
+    }
 }
