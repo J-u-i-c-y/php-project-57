@@ -57,29 +57,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function guest(): bool
-    {
-        return !$this->exists;
-    }
-
-    /**
-     * Задачи, созданные пользователем.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function createdTasks()
-    {
-        return $this->hasMany(Task::class, 'created_by_id');
-    }
-
-    /**
-     * Задачи, назначенные пользователю.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function assignedTasks()
-    {
-        return $this->hasMany(Task::class, 'assigned_to_id');
-    }
 }

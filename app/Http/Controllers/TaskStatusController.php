@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TaskStatusStoreRequest;
 use App\Http\Requests\TaskStatusUpdateRequest;
 use App\Models\TaskStatus;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskStatusController extends Controller
 {
