@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskStatusPolicy
 {
@@ -22,26 +23,24 @@ class TaskStatusPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function update(User $user, TaskStatus $taskStatus): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
+        if (!$user) {
+            return false;
+        }
+        
+        if ($taskStatus->tasks()->exists()) {
+            throw new AuthorizationException(__('layout.delete_error'));
+        }
+        
         return true;
-    }
-
-    public function restore(User $user, TaskStatus $taskStatus): bool
-    {
-        return false;
-    }
-
-    public function forceDelete(User $user, TaskStatus $taskStatus): bool
-    {
-        return false;
     }
 }

@@ -15,7 +15,7 @@ class LabelStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:labels|max:255',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:1000',
         ];
     }
 

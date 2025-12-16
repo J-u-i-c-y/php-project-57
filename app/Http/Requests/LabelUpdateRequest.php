@@ -18,7 +18,7 @@ class LabelUpdateRequest extends FormRequest
 
         return [
             'name' => "required|unique:labels,name,{$labelId}|max:255",
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:1000',
         ];
     }
 

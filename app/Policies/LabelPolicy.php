@@ -22,28 +22,16 @@ class LabelPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function update(User $user, Label $label): bool
     {
-        return true;
+        return $user !== null;
     }
 
     public function delete(User $user, Label $label): bool
     {
-        return $label->tasks()->doesntExist();
-    }
-
-    public function destroy(Label $label)
-    {
-        if ($label->tasks()->exists()) {
-            flash(__('controllers.label_statuses_destroy_failed'))->error();
-            return redirect()->route('labels.index');
-        }
-
-        $label->delete();
-        flash(__('controllers.label_destroy'))->success();
-        return redirect()->route('labels.index');
+        return $user !== null && !$label->tasks()->exists();
     }
 }
