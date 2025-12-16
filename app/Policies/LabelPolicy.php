@@ -27,7 +27,7 @@ class LabelPolicy
 
     public function update(User $user, Label $label): bool
     {
-        return $user !== null;
+        return true;
     }
 
     public function delete(User $user, Label $label): bool
