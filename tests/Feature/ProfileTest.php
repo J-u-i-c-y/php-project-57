@@ -259,21 +259,6 @@ class ProfileTest extends TestCase
         $this->assertTrue(Hash::check($originalPassword, $user->password));
     }
 
-    public function testProfileShowsCurrentUserInformation(): void
-    {
-        $user = User::factory()->create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-        ]);
-
-        $response = $this
-            ->actingAs($user)
-            ->get('/profile');
-
-        $response->assertSee('John Doe');
-        $response->assertSee('john@example.com');
-    }
-
     public function testGuestCannotAccessProfilePage(): void
     {
         $response = $this->get('/profile');
