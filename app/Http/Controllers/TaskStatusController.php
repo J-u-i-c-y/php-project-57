@@ -9,11 +9,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class TaskStatusController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->authorizeResource(TaskStatus::class);
-    // }
-
     public function index()
     {
         $taskStatuses = TaskStatus::paginate();

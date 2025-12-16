@@ -287,7 +287,7 @@ class ProfileTest extends TestCase
     public function testUserCanUpdateProfileWithMaximumNameLength(): void
     {
         $user = User::factory()->create();
-        $longName = str_repeat('a', 255); // Максимальная длина для строки
+        $longName = str_repeat('a', 255);
 
         $response = $this
             ->actingAs($user)
@@ -306,7 +306,7 @@ class ProfileTest extends TestCase
     public function testUserCannotUpdateProfileWithExceedingNameLength(): void
     {
         $user = User::factory()->create();
-        $tooLongName = str_repeat('a', 256); // Превышает максимальную длину
+        $tooLongName = str_repeat('a', 256);
 
         $response = $this
             ->actingAs($user)
@@ -328,15 +328,15 @@ class ProfileTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->patch('/profile', [
-                'name' => '  Test User  ', // С пробелами
+                'name' => '  Test User  ',
                 'email' => '  test@example.com  ',
             ]);
 
         $response->assertSessionHasNoErrors();
 
         $user->refresh();
-        $this->assertSame('Test User', $user->name); // Без пробелов
-        $this->assertSame('test@example.com', $user->email); // Без пробелов
+        $this->assertSame('Test User', $user->name);
+        $this->assertSame('test@example.com', $user->email);
     }
 
     public function testAccountDeletionRedirectsToHomePage(): void

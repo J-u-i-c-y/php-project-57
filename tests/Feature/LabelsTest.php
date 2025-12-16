@@ -29,7 +29,6 @@ class LabelsTest extends TestCase
 
     public function testLabelsScreenCanBeRendered(): void
     {
-        // Создаем метку прямо в тесте
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
 
         $response = $this->get(route('labels.index'));
@@ -39,19 +38,16 @@ class LabelsTest extends TestCase
 
     public function testCreateLabel(): void
     {
-        // Неавторизованный пользователь не может создать метку
         $response = $this->get(route('labels.create'));
         $response->assertStatus(403);
 
-        // Авторизуемся
         $this->actingAs($this->user);
 
         $response = $this->get(route('labels.create'));
         $response->assertStatus(200);
 
-        // Создаем новую метку
         $response = $this->post(route('labels.store'), [
-            'name' => 'Новая тестовая метка ' . uniqid(), // Уникальное имя
+            'name' => 'Новая тестовая метка ' . uniqid(),
             'description' => 'Описание метки',
         ]);
 
@@ -62,7 +58,6 @@ class LabelsTest extends TestCase
     {
         $label = Label::factory()->create(['name' => 'Тестовая метка']);
 
-        // Неавторизованный пользователь не может редактировать
         $response = $this->get(route('labels.edit', $label));
         $response->assertStatus(403);
 
@@ -71,7 +66,6 @@ class LabelsTest extends TestCase
         $response = $this->get(route('labels.edit', $label));
         $response->assertStatus(200);
 
-        // Обновляем метку
         $response = $this->patch(route('labels.update', $label), [
             'name' => 'Измененная тестовая метка',
             'description' => 'Новое описание',
