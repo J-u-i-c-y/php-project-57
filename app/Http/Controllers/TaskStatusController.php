@@ -8,11 +8,6 @@ use App\Models\TaskStatus;
 
 class TaskStatusController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(TaskStatus::class);
-    }
-
     public function index()
     {
         $taskStatuses = TaskStatus::paginate();
@@ -50,7 +45,9 @@ class TaskStatusController extends Controller
 
     public function destroy(TaskStatus $taskStatus)
     {
-        if ($taskStatus->tasks()->exists()) {
+        try {
+            $this->authorize('delete', $taskStatus);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
             flash(__('layout.delete_error'))->error();
             return redirect()->route('task_statuses.index');
         }
