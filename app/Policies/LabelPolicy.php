@@ -34,7 +34,11 @@ class LabelPolicy
 
     public function delete(User $user, Label $label): Response
     {
-        if ($label->tasks()->exists()) {
+        if (!Auth::check()) {
+            return Response::deny(__('controllers.label_statuses_destroy_failed'));
+        }
+        
+        if (Auth::check() && $label->tasks()->exists()) {
             return Response::deny(__('controllers.label_statuses_destroy_failed'));
         }
 
