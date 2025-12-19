@@ -26,16 +26,16 @@ class TaskFilterRequest extends TaskRequest
     protected function prepareForValidation(): void
     {
         parent::prepareForValidation();
-        
+
         if ($this->has('filter')) {
             $filter = $this->input('filter');
-            
+
             foreach (['status_id', 'created_by_id', 'assigned_to_id'] as $key) {
                 if (isset($filter[$key]) && $filter[$key] === '') {
                     $filter[$key] = null;
                 }
             }
-            
+
             $this->merge(['filter' => $filter]);
         }
     }
