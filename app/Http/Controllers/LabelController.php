@@ -6,6 +6,7 @@ use App\Http\Requests\LabelStoreRequest;
 use App\Http\Requests\LabelUpdateRequest;
 use App\Models\Label;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Traits\AuthorizesResources;
 
 class LabelController extends Controller
 {
@@ -54,6 +55,7 @@ class LabelController extends Controller
     public function destroy(Label $label)
     {
         $result = Gate::inspect('delete', $label);
+
         if ($result->denied()) {
             flash($result->message())->error();
             return redirect()->route('labels.index');

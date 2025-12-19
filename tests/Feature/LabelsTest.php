@@ -138,8 +138,8 @@ class LabelsTest extends TestCase
         $this->get(route('labels.create'))->assertStatus(403);
         $this->get(route('labels.edit', $label))->assertStatus(403);
 
-        $this->post(route('labels.store'), [])->assertStatus(302);
-        $this->put(route('labels.update', $label), [])->assertStatus(302);
+        $this->post(route('labels.store'), [])->assertStatus(403);
+        $this->put(route('labels.update', $label), [])->assertStatus(403);
 
         $response = $this->delete(route('labels.destroy', $label));
         $this->assertContains($response->getStatusCode(), [302, 403]);
