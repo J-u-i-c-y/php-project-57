@@ -87,7 +87,6 @@ class TaskTest extends TestCase
         ];
 
         $response = $this->post(route('tasks.store'), $taskData);
-        // dd($response->getSession()->get('errors'));
         $response->assertRedirect(route('tasks.index'));
 
         $this->assertDatabaseHas('tasks', [

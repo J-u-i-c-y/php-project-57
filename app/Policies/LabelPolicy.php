@@ -37,7 +37,7 @@ class LabelPolicy
         if (!$user) {
             return Response::deny(__('controllers.label_statuses_destroy_failed'));
         }
-        
+
         if ($label->tasks()->exists()) {
             return Response::deny(__('controllers.label_statuses_destroy_failed'));
         }

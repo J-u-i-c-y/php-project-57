@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Access\Response;
 
 class TaskStatusPolicy
 {
@@ -32,8 +33,16 @@ class TaskStatusPolicy
         return Auth::check();
     }
 
-    public function delete(User $user, TaskStatus $taskStatus): bool
+    public function delete(?User $user, TaskStatus $taskStatus): Response
     {
-        return !$taskStatus->tasks()->exists();
+        if (!$user) {
+            return Response::deny(__('layout.delete_error'));
+        }
+
+        if ($taskStatus->tasks()->exists()) {
+            return Response::deny(__('layout.delete_error'));
+        }
+
+        return Response::allow();
     }
 }

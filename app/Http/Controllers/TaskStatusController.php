@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskStatusStoreRequest;
 use App\Http\Requests\TaskStatusUpdateRequest;
+use Illuminate\Support\Facades\Gate;
 use App\Models\TaskStatus;
 
 class TaskStatusController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(TaskStatus::class);
+        $this->authorizeResource(TaskStatus::class, 'task_status', [
+            'except' => ['destroy'],
+        ]);
     }
 
     public function index()
@@ -50,7 +53,9 @@ class TaskStatusController extends Controller
 
     public function destroy(TaskStatus $taskStatus)
     {
-        if ($taskStatus->tasks()->exists()) {
+        $result = Gate::inspect('delete', $taskStatus);
+
+        if ($result->denied()) {
             flash(__('layout.delete_error'))->error();
             return redirect()->route('task_statuses.index');
         }
