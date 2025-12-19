@@ -8,6 +8,11 @@ use App\Models\TaskStatus;
 
 class TaskStatusController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     public function index()
     {
         $taskStatuses = TaskStatus::paginate();

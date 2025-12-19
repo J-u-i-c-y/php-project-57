@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LabelStoreRequest;
 use App\Http\Requests\LabelUpdateRequest;
 use App\Models\Label;
+use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label', [
+            'except' => ['destroy'],
+        ]);
+    }
+
     public function index()
     {
         $labels = Label::paginate();
@@ -21,7 +29,6 @@ class LabelController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Label::class);
         return view('labels.create');
     }
 
@@ -46,15 +53,15 @@ class LabelController extends Controller
 
     public function destroy(Label $label)
     {
-        try {
-            $this->authorize('delete', $label);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
-            flash(__('controllers.label_statuses_destroy_failed'))->error();
+        $result = Gate::inspect('delete', $label);
+        if ($result->denied()) {
+            flash($result->message())->error();
             return redirect()->route('labels.index');
         }
 
         $label->delete();
         flash(__('controllers.label_destroy'))->success();
+
         return redirect()->route('labels.index');
     }
 }

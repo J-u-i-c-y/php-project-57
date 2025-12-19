@@ -6,6 +6,7 @@ use App\Models\Label;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class LabelPolicy
 {
@@ -31,8 +32,12 @@ class LabelPolicy
         return Auth::check();
     }
 
-    public function delete(User $user, Label $label): bool
+    public function delete(User $user, Label $label): Response
     {
-        return !$label->tasks()->exists();
+        if ($label->tasks()->exists()) {
+            return Response::deny(__('controllers.label_statuses_destroy_failed'));
+        }
+
+        return Response::allow();
     }
 }
