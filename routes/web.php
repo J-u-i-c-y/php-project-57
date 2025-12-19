@@ -14,8 +14,7 @@ Route::get('/', function () {
 
 Route::resource('task_statuses', TaskStatusController::class);
 Route::resource('tasks', TaskController::class);
-// Route::resource('labels', LabelController::class);
-Route::resource('labels', LabelController::class)->middleware('auth');
+Route::resource('labels', LabelController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
