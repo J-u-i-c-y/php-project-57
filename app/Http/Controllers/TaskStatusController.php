@@ -45,9 +45,7 @@ class TaskStatusController extends Controller
 
     public function destroy(TaskStatus $taskStatus)
     {
-        try {
-            $this->authorize('delete', $taskStatus);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+        if ($taskStatus->tasks()->exists()) {
             flash(__('layout.delete_error'))->error();
             return redirect()->route('task_statuses.index');
         }
