@@ -35,7 +35,7 @@ class TaskStatusPolicy
 
     public function delete(?User $user, TaskStatus $taskStatus): Response
     {
-        if (!$user) {
+        if (!Auth::check()) {
             return Response::deny(__('layout.delete_error'));
         }
 

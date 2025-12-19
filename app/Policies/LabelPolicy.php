@@ -34,7 +34,7 @@ class LabelPolicy
 
     public function delete(?User $user, Label $label): Response
     {
-        if (!$user) {
+        if (!Auth::check()) {
             return Response::deny(__('controllers.label_statuses_destroy_failed'));
         }
 
