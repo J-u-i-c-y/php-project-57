@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Label;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LabelPolicy
@@ -22,12 +23,12 @@ class LabelPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     public function update(User $user, Label $label): bool
     {
-        return true;
+        return Auth::check();
     }
 
     public function delete(User $user, Label $label): bool

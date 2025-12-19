@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\TaskStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\AuthorizationException;
 
@@ -23,12 +24,12 @@ class TaskStatusPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     public function update(User $user, TaskStatus $taskStatus): bool
     {
-        return true;
+        return Auth::check();
     }
 
     public function delete(User $user, TaskStatus $taskStatus): bool

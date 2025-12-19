@@ -8,7 +8,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\TaskFilterRequest;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -20,12 +20,8 @@ class TaskController extends Controller
         $this->authorizeResource(Task::class);
     }
 
-    public function index(Request $request)
+    public function index(TaskFilterRequest $request)
     {
-        $request->validate([
-            'filter' => 'nullable|array',
-        ]);
-
         $filterTasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('status_id'),
@@ -38,7 +34,7 @@ class TaskController extends Controller
         $taskStatuses = TaskStatus::pluck('name', 'id');
         $users = User::pluck('name', 'id');
 
-        $filter = $request->input('filter', []);
+        $filter = $request->validated()['filter'] ?? [];
 
         return view('tasks.index', compact('tasks', 'taskStatuses', 'users', 'filter'));
     }
